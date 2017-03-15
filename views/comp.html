@@ -1,0 +1,28 @@
+<html>
+<head>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <h2> This is the host computer</h2>
+    <h1 id="black-card"></h1>
+    <button id="req-card"> Request new card </button>
+
+    <script type="text/javascript">
+        var socket = io.connect('http://192.168.0.7:3000');
+
+        $('#req-card').click( function() {
+            socket.emit('reqcard');
+        });
+
+        socket.on('update-black-card', function (text) {
+    		$('#black-card').html(text);
+    	});
+
+    </script>
+
+</body>
+
+</html

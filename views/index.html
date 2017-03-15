@@ -1,0 +1,20 @@
+<html>
+<head>
+</head>
+
+<body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+            window.location = "/mobile.html";
+        else {
+            window.location ="/comp.html";
+        }
+
+        var socket = io.connect('http://192.168.0.7:3000');
+    </script>
+
+    <h2> This is index.html</h2>
+</body>
+
+</html
