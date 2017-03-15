@@ -1,15 +1,19 @@
 <html>
 <head>
+    <script src="/vendor/jQuery/jQuery-3.1.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/comp.css">
 </head>
 
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <div id="bc-container">
+        <h1 id="black-card">Cards against humanity</h1>
+    </div>
 
-    <h2> This is the host computer</h2>
-    <h1 id="black-card"></h1>
     <button id="req-card"> Request new card </button>
-
     <script type="text/javascript">
         var socket = io.connect('http://192.168.0.7:3000');
 

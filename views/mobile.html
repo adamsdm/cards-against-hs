@@ -1,13 +1,24 @@
 <html>
 <head>
+    <script src="/vendor/jQuery/jQuery-3.1.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/client.css">
 </head>
 
 <body>
     <script src="/socket.io/socket.io.js"></script>
+
+    <h2 id="title">This is a mobile device</h2>
     <script type="text/javascript">
         var socket = io.connect('http://192.168.0.7:3000');
+
+        socket.on('update-black-card', function (text) {
+    		$('#title').html(text);
+    	});
     </script>
-    <h2>This is a mobile device</h2>
 </body>
 
 </html

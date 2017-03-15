@@ -1,9 +1,13 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
 var cards = require('./data.json');
-// routing
+
+
+
+app.use(express.static(__dirname + '/public')); 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
@@ -46,6 +50,6 @@ io.on('connection', function(socket){
 });
 
 
-http.listen(3000, function(){
+server.listen(3000, function(){
   console.log('listening on *:3000');
 });
