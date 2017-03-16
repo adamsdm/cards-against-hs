@@ -24,6 +24,8 @@
                 roomCode += possible.charAt(Math.floor(Math.random() * possible.length));
             }
 
+            socket.emit('createRoom', roomCode);
+
             window.location = "/comp.html#"+roomCode;
         });
 

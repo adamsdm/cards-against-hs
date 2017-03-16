@@ -13,30 +13,59 @@
         <h1 id="black-card">Cards against humanity</h1>
     </div>
 
+    <h3 id="room-code"></h3>
+
     <button id="req-card"> Request new card </button>
     <p id="textToSpeechBar">
         <label for="textToSpeech">Text to speech</label>
         <input type="checkbox" id="textToSpeech">
     </p>
 
+    <div id="players"></div>
 
     <script type="text/javascript">
         
-        var socket = io.connect('http://192.168.0.7:3000');
+        var socket = io.connect();
         var sound = document.getElementById("textToSpeech");
+        var roomId = window.location.href.split('#')[1];
+        var players = [];
 
+        $('#room-code').html("Room id: "+roomId);
+
+        if(window.location.hash) {
+          socket.emit('joinroom', "HOST", roomId );
+        } else {
+          alert("Oops");
+        }
 
         socket.on('debug', function(text){
             console.log(text);
         })
 
+        socket.on('user-joined-room', function(username){
+            players.push(username);
+            console.log(players);
+            
+            // Redraw user list
+            renderPlayers(players)
+        });
+
+        socket.on('user-left-room', function(username){
+            for(var i=0; i<players.length; i++){
+                if(players[i] == username)
+                    players.splice(i, 1);
+            }
+
+            renderPlayers(players);
+                
+        });
 
 
         $('#req-card').click( function() {
             socket.emit('reqcard');
         });
 
-        socket.emit('adduser', prompt("Enter username"), prompt("Enter roomcode"));
+        
 
 
 
@@ -56,6 +85,16 @@
 
             $('#black-card').html(text);
     	});
+
+
+        // Help functions
+        renderPlayers = function(players){
+            $("#players").empty();
+            for(var i=0; i<players.length; i++){
+                //if(players[i] != "HOST")
+                    $('#players').append('<b style="color: white;"> '+players[i] + '</b>');
+            }
+        }
 
     </script>
 

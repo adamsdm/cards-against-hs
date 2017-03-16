@@ -11,6 +11,16 @@ body{
     right: 20px;
     top: 20px;
 }
+#room-code{
+    position:fixed;
+    left: 20px;
+    top: 20px;
+
+    margin: 0px;
+    padding: 10px;
+    border-radius: 999em;
+    background: white;
+}
 #textToSpeechBar{
     color:white;
     position:fixed;

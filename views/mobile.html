@@ -11,19 +11,23 @@
 <body>
     <script src="/socket.io/socket.io.js"></script>
 
-    <h2 id="title">This is a mobile device</h2>
+    <h2 id="title">Cards against humanity</h2>
     <script type="text/javascript">
-        var socket = io.connect('http://192.168.0.7:3000');
+        var socket = io.connect();
 
-        socket.emit('adduser', prompt("Enter username"), prompt("Enter roomcode"));
+        socket.emit('joinroom', prompt("Enter username"), prompt("Enter roomcode"));
 
         socket.on('update-black-card', function (text) {
     		$('#title').html(text);
     	});
 
+        socket.on('host-left-room', function(){
+            alert("Host left the game");
+        });
+
         socket.on('debug', function(text){
             console.log(text);
-        })
+        });
     </script>
 </body>
 

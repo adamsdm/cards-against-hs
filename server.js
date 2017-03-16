@@ -10,7 +10,7 @@ var cards = require('./data.json');
 var usernames = {};
 
 // rooms which are currently available in chat
-var rooms = ['room1','room2','room3', 'general'];
+var rooms = [];
 
 
 
@@ -19,14 +19,6 @@ var rooms = ['room1','room2','room3', 'general'];
 function sendMsg(msg, room){
   io.sockets.in(room).emit('debug', msg);
 }
-
-setInterval(function(){
-  var room = 'room1';
-  var msg = "Ur in " + room;
-  
-  sendMsg(msg,room);
-}, 1000);
-
 
 
 
@@ -43,19 +35,44 @@ app.get('/comp.html', function (req, res) {
 });
 
 io.on('connection', function(socket){
-  // when the client emits 'adduser', this listens and executes
-  socket.on('adduser', function(username, room){
-    console.log("User "+username+" connected to room" + room);
 
+  socket.on('disconnect', function(){
+    if(socket.username=="HOST"){
+      io.sockets.in(socket.room).emit('host-left-room');
+
+      // Remove host room
+      for(var i=0; i<rooms.length; i++){
+        if(rooms[i]==socket.room){
+          rooms.splice(i, 1);
+        }
+      }
+
+      console.log(rooms);
+    }
+
+    io.sockets.in(socket.room).emit('user-left-room', socket.username);
+    socket.leave(socket.room);
+    console.log("A user disconnected");
+  });
+
+  // when the client emits 'adduser', this listens and executes
+  socket.on('joinroom', function(username, room){
+    
     socket.username = username;
     socket.room = room;
     usernames[username] = username;
     socket.join(room);
+    io.sockets.in(room).emit('user-joined-room', username);
+    console.log("User "+username+" connected to room " + room);
   });
 
-  socket.on('disconnect', function(){
-      console.log("A user disconnected");
+  socket.on('createRoom', function(roomId){
+    socket.isHost = true;    
+
+    console.log("Room "+roomId+ " was created.");
+    rooms.push(roomId);
   });
+  
   socket.on('reqcard', function () {
       // we tell the client to execute 'updatechat' with 2 parameters
       console.log("User req card");
