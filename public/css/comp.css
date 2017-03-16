@@ -3,13 +3,19 @@
 }
 
 body{
-    background-color: black;
+    background-color: currentColor;
 }
 
 #req-card{
     position:fixed;
     right: 20px;
     top: 20px;
+}
+#textToSpeechBar{
+    color:white;
+    position:fixed;
+    right: 20px;
+    top: 50px; 
 }
 
 #bc-container{
