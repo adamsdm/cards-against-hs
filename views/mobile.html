@@ -12,23 +12,7 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <h2 id="title">Cards against humanity</h2>
-    <script type="text/javascript">
-        var socket = io.connect();
-
-        socket.emit('joinroom', prompt("Enter username"), prompt("Enter roomcode"));
-
-        socket.on('update-black-card', function (text) {
-    		$('#title').html(text);
-    	});
-
-        socket.on('host-left-room', function(){
-            alert("Host left the game");
-        });
-
-        socket.on('debug', function(text){
-            console.log(text);
-        });
-    </script>
+    <script type="text/javascript" src="/js/client.js"></script>
 </body>
 
 </html

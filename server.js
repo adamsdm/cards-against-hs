@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-
+var _ = require('underscore');
 var cards = require('./data.json');
 
 
@@ -21,8 +21,6 @@ function sendMsg(msg, room){
 }
 
 
-
-
 app.use(express.static(__dirname + '/public')); 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -36,45 +34,36 @@ app.get('/comp.html', function (req, res) {
 
 io.on('connection', function(socket){
 
-  socket.on('disconnect', function(){
-    if(socket.username=="HOST"){
-      io.sockets.in(socket.room).emit('host-left-room');
-
-      // Remove host room
-      for(var i=0; i<rooms.length; i++){
-        if(rooms[i]==socket.room){
-          rooms.splice(i, 1);
-        }
-      }
-
-      console.log(rooms);
-    }
-
-    io.sockets.in(socket.room).emit('user-left-room', socket.username);
-    socket.leave(socket.room);
-    console.log("A user disconnected");
-  });
-
-  // when the client emits 'adduser', this listens and executes
-  socket.on('joinroom', function(username, room){
-    
-    socket.username = username;
-    socket.room = room;
-    usernames[username] = username;
-    socket.join(room);
-    io.sockets.in(room).emit('user-joined-room', username);
-    console.log("User "+username+" connected to room " + room);
-  });
-
   socket.on('createRoom', function(roomId){
     socket.isHost = true;    
 
     console.log("Room "+roomId+ " was created.");
     rooms.push(roomId);
   });
+
+  // when the client emits 'joinroom', this listens and executes
+  socket.on('joinroom', function(username, room){
+
+    // If room doens't exists in 'rooms'
+    if(_.indexOf(rooms, room)){
+      console.log("User tried to join room "+room+" which doesn't exist");
+      socket.emit('couldnt-join-room');
+    } else {
+      socket.username = username;
+      socket.room = room;
+      usernames[username] = username;
+      socket.join(room);
+      io.sockets.in(room).emit('user-joined-room', username);
+      console.log("User "+username+" connected to room " + room);
+    }
+  });
+
+  socket.on('leaveroom', function(){
+    socket.leave(socket.room);
+  })
+  
   
   socket.on('reqcard', function () {
-      // we tell the client to execute 'updatechat' with 2 parameters
       console.log("User req card");
 
       //Get a new text card
@@ -85,15 +74,21 @@ io.on('connection', function(socket){
       var str = bc["text"] + ' ('+ bc["pick"] + ')';
 
       io.sockets.in(socket.room).emit('update-black-card', str);
-      /*
-      var bci = Math.round(Math.random()*(cards["blackCards"].length-1));
-      var wci = Math.round(Math.random()*(cards["whiteCards"].length-1));
-      var bc = cards["blackCards"][bci];
-      var wc = cards["whiteCards"][wci];
-      var str = bc["text"] + '('+ bc["pick"] + ')' + wc;
-      console.log(str);
-      io.sockets.in(socket.room).emit('updatechat', socket.username, str);
-      */
+  });
+
+    socket.on('disconnect', function(){
+    if(socket.username=="HOST"){
+      io.sockets.in(socket.room).emit('host-left-room');
+
+      // Remove host room
+      rooms.splice(_.indexOf(rooms, socket.room), 1);
+
+      console.log(rooms);
+    }
+
+    io.sockets.in(socket.room).emit('user-left-room', socket.username);
+    socket.leave(socket.room);
+    console.log("User "+ socket.username +" disconnected");
   });
 
 });
