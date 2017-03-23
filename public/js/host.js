@@ -53,20 +53,19 @@ $('#req-card').click( function() {
 
 
 
-socket.on('update-black-card', function (text) {
+socket.on('update-black-card', function (text, noPicks) {
 
     //Text to speech
     if(sound.checked){
         var t2t = text;
         t2t = text.replace(/_/g, ", blank,");
-        t2t = t2t.substring(0, t2t.length-3);
+        t2t = t2t.substring(0, t2t.length);
         var msg = new SpeechSynthesisUtterance(t2t);
         window.speechSynthesis.speak(msg);
     }
-    
-    
-    
 
+    text = text + '<br> <h2>('+noPicks+')</h2';
+    
     $('#black-card').html(text);
 });
 

@@ -1,20 +1,44 @@
 var socket = io.connect();
 
+var whiteCards = [];
+
 var username = prompt("Enter username");
-var roomCode = prompt("Enter roomcode");
+var roomcode = prompt("Enter room code");
+
+socket.emit('joinroom', username, roomcode);
 
 
-console.log(username);
 
-socket.emit('joinroom', username, roomCode);
+
+/***TODO***/
+//http://jsfiddle.net/65JPw/2702/
+/**********/
+
+
 
 
 socket.on('couldnt-join-room', function() {
-    alert("Room not found");
+    alert("Room "+roomcode+" does not exist");
 })
 
-socket.on('update-black-card', function (text) {
+socket.on('update-black-card', function (text, noPicks) {
     $('#title').html(text);
+    
+    if(whiteCards.length<5)
+        socket.emit('req-white-card');
+
+    renderWhiteCards();
+});
+
+socket.on('get-white-card', function(text){
+    whiteCards.push(text);
+
+    if(whiteCards.length < 5)
+        socket.emit('req-white-card');
+
+    console.log(whiteCards);
+    if(whiteCards.length == 5)
+        renderWhiteCards();
 });
 
 socket.on('host-left-room', function(){
@@ -26,3 +50,15 @@ socket.on('host-left-room', function(){
 socket.on('debug', function(text){
     console.log(text);
 });
+
+
+function renderWhiteCards(){
+    console.log("Rendering white cards...");
+    $('#whiteCards').empty();
+
+    console.log(whiteCards);
+    
+    for(var i=0; i<whiteCards.length; i++){
+        $('#whiteCards').append('<input type="checkbox" name="vehicle" value="Bike">' + whiteCards[i] + '<br>');
+    }
+}
