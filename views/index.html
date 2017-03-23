@@ -15,7 +15,7 @@
     <button id="create-game">Create new game</button>
     
     <script>
-        var socket = io.connect('http://192.168.0.7:3000');
+        var socket = io.connect();
 
         $('#create-game').click( function() {
             var roomCode = "";
@@ -25,8 +25,8 @@
             }
 
             socket.emit('createRoom', roomCode);
-
             window.location = "/comp.html#"+roomCode;
+            
         });
 
 

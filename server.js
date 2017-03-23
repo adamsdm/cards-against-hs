@@ -63,8 +63,10 @@ app.get('/comp.html', function (req, res) {
 });
 
 io.on('connection', function(socket){
+  console.log("A user connected");
 
   socket.on('createRoom', function(roomId){
+    console.log("Creating room "+roomId);
     // First user to create the room is set to host
     socket.isHost = true;    
 
