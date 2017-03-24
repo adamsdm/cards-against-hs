@@ -9,14 +9,6 @@ socket.emit('joinroom', username, roomcode);
 
 
 
-
-/***TODO***/
-//http://jsfiddle.net/65JPw/2702/
-/**********/
-
-
-
-
 socket.on('couldnt-join-room', function() {
     alert("Room "+roomcode+" does not exist");
 })
