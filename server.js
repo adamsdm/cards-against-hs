@@ -2,8 +2,20 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+
+var path = require('path');
+var config = require('./webpack.config.js');
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+
 var _ = require('underscore');
 var cards = require('./data.json');
+
+var compiler = webpack(config);
+
+
+
 
 
 // usernames which are currently connected to the chat
@@ -17,32 +29,6 @@ var whiteCards = cards["whiteCards"];
 var rooms = [];
 var roomsData = {};
 
-/* 
-roomData = {
-  room1: {
-      bci: 0,
-      wci: 0,
-      bc: [
-        "....",
-        "....",
-      ],
-      wc: [
-        "....",
-        "....",
-      ],
-      players: [
-        'player1',
-        'player2',
-        ...
-      ]
-    },
-    room2: {
-      ...
-    }
-}
-*/
-
-
 
 
 //Debug
@@ -50,16 +36,21 @@ function sendMsg(msg, room){
   io.sockets.in(room).emit('debug', msg);
 }
 
+app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
+app.use(webpackHotMiddleware(compiler));
+
 
 app.use(express.static(__dirname + '/public')); 
+app.use(express.static(__dirname + '/dist')); 
+
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-app.get('/mobile.html', function (req, res) {
-  res.sendFile(__dirname + '/views/mobile.html');
+app.get('/client.html', function (req, res) {
+  res.sendFile(__dirname + '/views/client.html');
 });
-app.get('/comp.html', function (req, res) {
-  res.sendFile(__dirname + '/views/comp.html');
+app.get('/host.html', function (req, res) {
+  res.sendFile(__dirname + '/views/host.html');
 });
 
 io.on('connection', function(socket){

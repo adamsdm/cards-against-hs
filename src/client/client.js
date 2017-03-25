@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var socket = io.connect();
 
 var whiteCards = [];

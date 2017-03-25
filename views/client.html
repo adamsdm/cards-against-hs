@@ -1,9 +1,8 @@
 <html>
 <head>
-    <script src="/vendor/jQuery/jQuery-3.1.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/client.css">
 </head>
@@ -12,10 +11,12 @@
     
     <div class="container">
         <h2 id="title">Waiting for next round</h2>
-        <script type="text/javascript" src="/js/client.js"></script>
         
         <div id=whiteCards></div>
     </div>
 
+    <div id="app"></div>
+    
+    <script type="text/javascript" src="/client-bundle.js"></script>
 </body>
 </html>

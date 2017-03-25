@@ -46,6 +46,7 @@ socket.on('user-left-room', function(username){
 
 
 $('#req-card').click( function() {
+    console.log('req card');
     socket.emit('reqcard');
 });
 
@@ -69,9 +70,8 @@ socket.on('update-black-card', function (text, noPicks) {
     $('#black-card').html(text);
 });
 
-
 // Help functions
-renderPlayers = function(players){
+var renderPlayers = function(players){
     $("#players").empty();
     for(var i=0; i<players.length; i++){
         //if(players[i] != "HOST")
