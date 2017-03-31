@@ -4,50 +4,93 @@ class WhiteCards extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            selectedCards: []
+            selectedCards: [],
+            noSelected: 0,
         }
 
     }
+
+    incOrDecSelected(isInc){
+        let _noSelected = this.state.noSelected; 
+        if(isInc){
+            _noSelected++;
+            this.setState({noSelected: _noSelected});
+        } 
+        else{ 
+            _noSelected--;
+            this.setState({noSelected: _noSelected});
+        }
+        console.log(this.state);
+    }
+
     renderWhiteCards() {
         return this.props.wcards.map((card, i) => {
             return (
-                <Wcard text={card}/>
+                <Wcard 
+                    key={i} 
+                    text={card}
+                    noSelected={this.state.noSelected}
+                    maxSelected={this.props.maxSelected}
+                    incOrDecSelected={this.incOrDecSelected.bind(this)
+
+                }/>
             );
         }, this);
     }
 
-    handleSelect(card) {
-        console.log(card);
-    }
 
     render() {
+
+        if(this.state.noSelected == this.props.maxSelected){
+            console.log("Rendering");
+            return (
+                <div>
+                    <p> Select: {this.props.maxSelected} </p>
+                    <table className="whiteCardTable">
+                        {this.renderWhiteCards()}
+                    </table>
+                    <button> Submit </button>
+                </div>
+            )       
+        }
         return (
-            <table className="whiteCardTable">
-                {this.renderWhiteCards()}
-            </table>
+            <div>
+                <p> Select: {this.props.maxSelected} </p>
+                <table className="whiteCardTable">
+                    {this.renderWhiteCards()}
+                </table>
+            </div>
         )
     }
 }
 
 class Wcard extends Component {
     constructor(props, context) {
+        console.log("Creating white card");
         super(props, context)
         this.state = {
             selected: false,
-            selectInd: ''
+            selectInd: '',
         }
     }
 
     handleSelect(){
         var isSelected = this.state.selected;
+        // Unselect
         if(isSelected){
-          this.setState({selected: false});
-          this.setState({selectInd: ''});
+            this.props.incOrDecSelected(false);
+            this.setState({selected: false});
+            this.setState({selectInd: ''});
+        // Select
         } else {
-           this.setState({selected: true});
-           this.setState({selectInd: '1'});
+
+            // Ensure max noCards aren't selected
+            if(this.props.noSelected < this.props.maxSelected){
+                this.props.incOrDecSelected(true);
+                this.setState({selected: true});
+                this.setState({selectInd: '1'});
+            }
         }
-        
     }
 
     render(){

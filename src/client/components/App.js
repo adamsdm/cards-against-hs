@@ -16,7 +16,8 @@ class App extends Component {
     super(props, context)
     this.state = {
       bcText: 'Waiting for next round',
-      whiteCards: []
+      whiteCards: [],
+      maxWcSelect: 0
     }
 
   }
@@ -32,6 +33,7 @@ class App extends Component {
 
     _updateBlackCard(text, noPicks){ 
         this.setState({bcText: text});
+        this.setState({maxWcSelect: noPicks});
 
         if(this.state.whiteCards.length<5)
             socket.emit('req-white-card');
@@ -58,7 +60,7 @@ class App extends Component {
         return (
             <div className="container">
                 <BlackCard bcText = {this.state.bcText} />
-                <WhiteCards wcards = {this.state.whiteCards} />
+                <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect}/>
             </div>
         )
     }
