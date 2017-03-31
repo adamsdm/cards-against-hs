@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 class Wcard extends Component {
     constructor(props, context) {
-        console.log("Creating white card");
         super(props, context)
         this.state = {
             selected: false,

@@ -93,8 +93,8 @@ io.on('connection', function(socket){
     }
   });
 
-  socket.on('leaveroom', function(){
-    //socket.leave(socket.room);
+  socket.on('submit-cards-from-user', function(payload){
+    console.log("User "+payload.user+" submitted: "+payload.data);
   })
   
   socket.on('reqcard', function () {

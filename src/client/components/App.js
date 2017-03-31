@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import BlackCard from './BlackCard'
 import WhiteCards from './WhiteCards'
 
-var socket = io.connect();
-//var username = prompt("Enter username");
-//var roomcode = prompt("Enter room code");
+var _ = require('underscore');
 
-var roomcode = "wjmq";
-var username = "Adam";
+var socket = io.connect();
+var username = prompt("Enter username");
+var roomcode = prompt("Enter room code");
 
 socket.emit('joinroom', username, roomcode);
 
@@ -37,6 +36,7 @@ class App extends Component {
         this.setState({bcText: text});
         this.setState({maxWcSelect: noPicks});
         this.setState( {cardsSubmitted: false} );
+        this.setState({selectedCards: [] });
 
         if(this.state.whiteCards.length<5)
             socket.emit('req-white-card');
@@ -48,8 +48,6 @@ class App extends Component {
 
     _getWhiteCard(text){
         this.setState({whiteCards: this.state.whiteCards.concat([text])});
-            console.log(this.state.whiteCards);
-
             if(this.state.whiteCards.length < 5)
                 socket.emit('req-white-card');
     }
@@ -64,15 +62,22 @@ class App extends Component {
             user: username,
             data: data
         }
-        //this.setState( {cardsSubmitted: true } );
-        console.log(payload.user, payload.data);
+        this.setState( {cardsSubmitted: true } );
+        
+        // Send payload to server
+        socket.emit('submit-cards-from-user', payload);
+
+        //Remove submited cards from hand
+        let newCardsOnHand = _.difference(this.state.whiteCards, payload.data);
+        this.setState({whiteCards: newCardsOnHand});
+
     }
 
     render() {
         return (
             <div className="container">
                 <BlackCard bcText = {this.state.bcText} />
-                {!this.state.cardsSubmitted &&
+                {!this.state.cardsSubmitted && this.state.bcText != "Thanks for playing!" && this.state.whiteCards.length>0 &&
                     <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect} submit={this.submitCards.bind(this)}/>
                 }
             </div>

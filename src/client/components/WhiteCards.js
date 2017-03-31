@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Wcard from './Wcard'
+var _ = require('underscore');
 
 class WhiteCards extends Component {
     constructor(props, context) {
@@ -13,17 +14,18 @@ class WhiteCards extends Component {
     }
 
     addOrRemSelected(isInc, data){
+        this.state.selectedCards = _.compact(this.state.selectedCards);
         let _noSelected = this.state.noSelected; 
         if(isInc){
             _noSelected++;
-            this.setState({noSelected: _noSelected});
-            this.state.selectedCards[data.ind] = data.text;
+            this.state.selectedCards[data.ind-1] = data.text;
         } 
         else{ 
             _noSelected--;
-            this.setState({noSelected: _noSelected});
             this.state.selectedCards[data.ind] = '';
         }
+        
+        this.setState({noSelected: _noSelected});
     }
 
     renderWhiteCards() {
@@ -44,13 +46,17 @@ class WhiteCards extends Component {
     sendWC(){
         this.props.submit(this.state.selectedCards);
         this.setState({cardsSubmitted: true});
+        this.setState({noSelected: 0});
+        this.setState({selectedCards: []});
     }
 
     render() {
 
         return (
             <div>
-                <p> Select: {this.props.maxSelected} </p>
+                {this.props.maxSelected - this.state.noSelected >0 &&
+                    <p> Select: {this.props.maxSelected - this.state.noSelected} </p>
+                }
                 <table className="whiteCardTable">
                     {this.renderWhiteCards()}
                 </table>
