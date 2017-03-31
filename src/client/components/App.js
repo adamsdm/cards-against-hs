@@ -6,7 +6,7 @@ var socket = io.connect();
 //var username = prompt("Enter username");
 //var roomcode = prompt("Enter room code");
 
-var roomcode = "oas0";
+var roomcode = "wjmq";
 var username = "Adam";
 
 socket.emit('joinroom', username, roomcode);
@@ -17,7 +17,9 @@ class App extends Component {
     this.state = {
       bcText: 'Waiting for next round',
       whiteCards: [],
-      maxWcSelect: 0
+      selectedCards: [],
+      maxWcSelect: 0,
+      cardsSubmitted: false
     }
 
   }
@@ -34,6 +36,7 @@ class App extends Component {
     _updateBlackCard(text, noPicks){ 
         this.setState({bcText: text});
         this.setState({maxWcSelect: noPicks});
+        this.setState( {cardsSubmitted: false} );
 
         if(this.state.whiteCards.length<5)
             socket.emit('req-white-card');
@@ -56,11 +59,22 @@ class App extends Component {
         socket.emit('leaveroom', username); 
     }
 
+    submitCards(data){
+        let payload = {
+            user: username,
+            data: data
+        }
+        //this.setState( {cardsSubmitted: true } );
+        console.log(payload.user, payload.data);
+    }
+
     render() {
         return (
             <div className="container">
                 <BlackCard bcText = {this.state.bcText} />
-                <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect}/>
+                {!this.state.cardsSubmitted &&
+                    <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect} submit={this.submitCards.bind(this)}/>
+                }
             </div>
         )
     }

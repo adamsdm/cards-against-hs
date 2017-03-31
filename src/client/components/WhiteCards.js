@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Wcard from './Wcard'
 
 class WhiteCards extends Component {
     constructor(props, context) {
@@ -6,21 +7,23 @@ class WhiteCards extends Component {
         this.state = {
             selectedCards: [],
             noSelected: 0,
+            cardsSubmitted: false
         }
 
     }
 
-    incOrDecSelected(isInc){
+    addOrRemSelected(isInc, data){
         let _noSelected = this.state.noSelected; 
         if(isInc){
             _noSelected++;
             this.setState({noSelected: _noSelected});
+            this.state.selectedCards[data.ind] = data.text;
         } 
         else{ 
             _noSelected--;
             this.setState({noSelected: _noSelected});
+            this.state.selectedCards[data.ind] = '';
         }
-        console.log(this.state);
     }
 
     renderWhiteCards() {
@@ -31,76 +34,34 @@ class WhiteCards extends Component {
                     text={card}
                     noSelected={this.state.noSelected}
                     maxSelected={this.props.maxSelected}
-                    incOrDecSelected={this.incOrDecSelected.bind(this)
+                    addOrRemSelected={this.addOrRemSelected.bind(this)
 
                 }/>
             );
         }, this);
     }
 
+    sendWC(){
+        this.props.submit(this.state.selectedCards);
+        this.setState({cardsSubmitted: true});
+    }
 
     render() {
 
-        if(this.state.noSelected == this.props.maxSelected){
-            console.log("Rendering");
-            return (
-                <div>
-                    <p> Select: {this.props.maxSelected} </p>
-                    <table className="whiteCardTable">
-                        {this.renderWhiteCards()}
-                    </table>
-                    <button> Submit </button>
-                </div>
-            )       
-        }
         return (
             <div>
                 <p> Select: {this.props.maxSelected} </p>
                 <table className="whiteCardTable">
                     {this.renderWhiteCards()}
                 </table>
+
+                {this.state.noSelected == this.props.maxSelected &&
+                    <button onClick={() => this.sendWC()}> Submit </button>
+                }
             </div>
         )
     }
 }
 
-class Wcard extends Component {
-    constructor(props, context) {
-        console.log("Creating white card");
-        super(props, context)
-        this.state = {
-            selected: false,
-            selectInd: '',
-        }
-    }
-
-    handleSelect(){
-        var isSelected = this.state.selected;
-        // Unselect
-        if(isSelected){
-            this.props.incOrDecSelected(false);
-            this.setState({selected: false});
-            this.setState({selectInd: ''});
-        // Select
-        } else {
-
-            // Ensure max noCards aren't selected
-            if(this.props.noSelected < this.props.maxSelected){
-                this.props.incOrDecSelected(true);
-                this.setState({selected: true});
-                this.setState({selectInd: '1'});
-            }
-        }
-    }
-
-    render(){
-        return(
-            <tr onClick={() => this.handleSelect()} className={this.state.selected? 'selected':''}> 
-                <td>{this.state.selectInd}</td> 
-                <td>{this.props.text}</td> 
-            </tr>
-        )
-    }
-}
 
 export default WhiteCards
