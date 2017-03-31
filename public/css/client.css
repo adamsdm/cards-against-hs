@@ -1,0 +1,13 @@
+.whiteCardTable td{
+    border:1px solid;
+    min-width: 30px;
+    padding: 10px;
+}
+
+.whiteCardTable tr{
+    cursor: pointer;
+}
+
+.selected{
+    background-color: green;
+}
