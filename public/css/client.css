@@ -11,3 +11,10 @@
 .selected{
     background-color: green;
 }
+
+.joinRoomForm {
+    margin-top: 20px;
+}
+.joinRoomForm input{
+    width:100%;
+}

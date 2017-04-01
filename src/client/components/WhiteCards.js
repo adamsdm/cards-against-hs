@@ -58,7 +58,9 @@ class WhiteCards extends Component {
                     <p> Select: {this.props.maxSelected - this.state.noSelected} </p>
                 }
                 <table className="whiteCardTable">
-                    {this.renderWhiteCards()}
+                    <tbody>
+                        {this.renderWhiteCards()}
+                    </tbody>
                 </table>
 
                 {this.state.noSelected == this.props.maxSelected &&

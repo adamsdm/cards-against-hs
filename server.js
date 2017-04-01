@@ -88,7 +88,10 @@ io.on('connection', function(socket){
       usernames[username] = username;
 
       socket.join(room);
+      // Emit to all other sockets that a player joined
       io.sockets.in(room).emit('user-joined-room', username);
+      // Emit to the player that he succesfully joined the room
+      socket.emit('succesfully-joined-room');
       console.log("User "+username+" connected to room " + room);
     }
   });
