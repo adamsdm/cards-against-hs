@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import update from 'immutability-helper';
 import BlackCard from './BlackCard'
 import PlayerList from './PlayerList'
 
@@ -10,7 +11,8 @@ class App extends Component {
         this.state = {
           bcText: 'Cards against humanity',
           inRoom: false,
-          players: []
+          players: [],
+          allHaveSubmitted: true
         }
     }
 
@@ -41,18 +43,29 @@ class App extends Component {
     }
 
     _updateBlackCard(text, noPicks){ 
+        // Clear submitted cards
+        var players = this.state.players;
+        for(var i=0; i<players.length; i++){
+            players[i].submittedCards = [];
+        }
+
         this.setState({
             bcText: text,
-            maxWcSelect: noPicks
+            maxWcSelect: noPicks,
+            players: players
         });
+
+
     }
     _userJoined(username){
-        alert("User "+username+" joined the room");
-        let player = {
-            username: username,
-            submittedCards: []
+        if(username!='HOST'){
+            alert("User "+username+" joined the room");
+            let player = {
+                username: username,
+                submittedCards: []
+            }
+            this.setState({players: this.state.players.concat([player])});
         }
-        this.setState({players: this.state.players.concat([player])});
     }
     _userLeft(username){
         var players = this.state.players;
@@ -65,15 +78,41 @@ class App extends Component {
         this.setState({players: players});
     }
     _userSubmited(payload){
+        let players = this.state.players;
         let name = payload.user;
         let cards = payload.data;
-        for(let i=0; i<this.state.players.length; i++){
 
+        //http://stackoverflow.com/questions/28121272/whats-the-best-way-to-update-an-object-in-an-array-in-reactjs
+        var playerIndex = players.findIndex(function(c) { 
+            return c.username == name; 
+        });
+
+        var updatedPlayer = update(players[playerIndex], {
+            submittedCards: {$set: cards},
+        });
+        var newPlayers = update(players, {
+            $splice: [[playerIndex, 1, updatedPlayer]]
+        });
+
+        this.setState({players: newPlayers});
+
+        //Check if all players have submitted
+        for(var i=0; i<newPlayers.length; i++){
+            if(newPlayers[i].username!= 'HOST')
+                if(newPlayers[i].submittedCards.length == 0)
+                    return;
         }
+        this.setState({allHaveSubmitted: true});
+
     }
 
     reqBlackCard(){
-        socket.emit('reqcard');
+        console.log(this.state.players.length);
+        if(this.state.players.length > 0) {
+            socket.emit('reqcard');
+            return;
+        }
+        alert("No players in room");
     }
 
     render() {
@@ -82,7 +121,9 @@ class App extends Component {
             <h3 id="room-code">Roomcode: {this.state.roomId}</h3>
             <BlackCard bcText={this.state.bcText} />
             <PlayerList players={this.state.players} />
-            <button id="req-card" onClick={this.reqBlackCard}> Request new card </button>
+            {this.state.allHaveSubmitted && 
+                <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
+            }
         </div>
         )
     }

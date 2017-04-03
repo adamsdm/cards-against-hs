@@ -18,3 +18,8 @@
 .joinRoomForm input{
     width:100%;
 }
+
+.submitted{
+    background-color: green;
+    border-radius: 999em;
+}

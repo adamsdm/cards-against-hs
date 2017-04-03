@@ -44,3 +44,9 @@ body{
 #playerList td{
     padding: 10px;
 }
+
+
+.submitted{
+    background-color: green;
+    border-radius: 999em;
+}
