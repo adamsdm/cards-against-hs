@@ -8,7 +8,7 @@ class BlackCard extends Component {
     render() {
         return (
         <div>
-            <h2 dangerouslySetInnerHTML={this.createMarkup(this.props.bcText)}></h2>
+            <h2 className="bcText" dangerouslySetInnerHTML={this.createMarkup(this.props.bcText)}></h2>
         </div>
         )
     }

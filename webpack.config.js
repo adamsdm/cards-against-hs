@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'inline-source-map',
   entry: {
-    host:   ['webpack-hot-middleware/client', './src/host/host.js'],
+    host:   ['webpack-hot-middleware/client', './src/host/index.js'],
     client: ['webpack-hot-middleware/client', './src/client/index.js']
   },
   output: {
@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     loaders: [

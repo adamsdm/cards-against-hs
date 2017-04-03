@@ -9,19 +9,18 @@ var socket = io.connect();
 
 class App extends Component {
     constructor(props, context) {
-    super(props, context)
-    this.state = {
-      bcText: 'Waiting for next round',
-      whiteCards: [],
-      selectedCards: [],
-      maxWcSelect: 0,
-      cardsSubmitted: false,
-      inRoom: false,
-      username: '',
-      roomcode: ''
+        super(props, context)
+        this.state = {
+          bcText: 'Waiting for next round',
+          whiteCards: [],
+          selectedCards: [],
+          maxWcSelect: 0,
+          cardsSubmitted: false,
+          inRoom: false,
+          username: '',
+          roomcode: ''
+        }
     }
-
-  }
   // Socket management
     componentDidMount() {  
         let that=this;  

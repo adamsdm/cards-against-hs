@@ -15,18 +15,10 @@ var cards = require('./data.json');
 var compiler = webpack(config);
 
 
-
-
-
-// usernames which are currently connected to the chat
-var usernames = {};
-
-
 var blackCards = cards["blackCards"];
 var whiteCards = cards["whiteCards"];
 
 // rooms which are currently available in chat
-var rooms = [];
 var roomsData = {};
 
 
@@ -62,30 +54,28 @@ io.on('connection', function(socket){
     socket.isHost = true;    
 
     console.log("Room "+roomId+ " was created.");
-    rooms.push(roomId);
 
     //Add a white and black card deck for the room
-    
     roomsData[roomId] = {
       bci: 0,
       wci: 0,
       bc: _.shuffle(blackCards),
-      wc: _.shuffle(whiteCards)
+      wc: _.shuffle(whiteCards),
+      players: []
     };
   });
 
   // when the client emits 'joinroom', this listens and executes
-  socket.on('joinroom', function(username, room){
-
+  socket.on('joinroom', function(username, room){;
     // If room doens't exists in 'rooms'
-    if(!_.contains(rooms, room) ){
+    if(!roomsData[room] ){
       console.log("User tried to join room "+room+" which doesn't exist");
       socket.emit('couldnt-join-room');
     } else {
 
       socket.username = username;
       socket.room = room;
-      usernames[username] = username;
+      roomsData[room].players.push(username);
 
       socket.join(room);
       // Emit to all other sockets that a player joined
@@ -93,6 +83,7 @@ io.on('connection', function(socket){
       // Emit to the player that he succesfully joined the room
       socket.emit('succesfully-joined-room');
       console.log("User "+username+" connected to room " + room);
+      console.log(roomsData[room].players)
     }
   });
 
@@ -101,7 +92,11 @@ io.on('connection', function(socket){
   })
   
   socket.on('reqcard', function () {
-      console.log("User req card");
+
+      if(!roomsData[socket.room]){
+        console.log("User from room "+socket.room+" req card, room doesnt exist");
+        return;
+      }
 
       var bci = roomsData[socket.room].bci;
       var wci = roomsData[socket.room].wci;
@@ -138,16 +133,32 @@ io.on('connection', function(socket){
   })
 
   socket.on('disconnect', function(){
+    // If socket isn't in a room, do nothing
+    if(!socket.room){
+      console.log(socket.username + " disconnected");
+      return;
+    }
+
+    var players = roomsData[socket.room].players;
+    // Remove username from list of players in room
+    for(var i=0; i<players.length; i++){
+      if(players[i] == socket.username){
+        players.splice(i, 1);
+        roomsData[socket.room].players = players;
+        break;
+      }
+    }
+
     if(socket.username=="HOST"){
       io.sockets.in(socket.room).emit('host-left-room');
-
-      // Remove host room...
-      rooms.splice(_.indexOf(rooms, socket.room), 1);
-      // Aswell as remove the data for the room
-      delete roomsData[socket.room];
-
-      console.log(rooms);
     }
+
+    console.log(roomsData[socket.room].players);
+
+    // Remove host room if no players left
+    if(roomsData[socket.room].length==0) delete roomsData[socket.room];
+
+    
 
     io.sockets.in(socket.room).emit('user-left-room', socket.username);
     console.log("User "+ socket.username +" disconnected");
