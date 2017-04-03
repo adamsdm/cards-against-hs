@@ -6,7 +6,7 @@ class PlayerList extends Component {
         return this.props.players.map((player, i) => {
             if(player.username !== 'HOST'){
                 return (
-                    <td align="center"> 
+                    <td key={i}> 
                         <img src="images/user-icon.png" height="64px"/><br />
                         {player.username}
                     </td>

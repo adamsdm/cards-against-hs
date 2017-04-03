@@ -28,6 +28,7 @@ class App extends Component {
         socket.on('update-black-card', this._updateBlackCard.bind(this));
         socket.on('user-joined-room', this._userJoined.bind(this));
         socket.on('user-left-room', this._userLeft.bind(this));
+        socket.on('user-submitted-cards', this._userSubmited.bind(this));
     }
         
     _joinedRoom(){
@@ -48,7 +49,8 @@ class App extends Component {
     _userJoined(username){
         alert("User "+username+" joined the room");
         let player = {
-            username: username
+            username: username,
+            submittedCards: []
         }
         this.setState({players: this.state.players.concat([player])});
     }
@@ -62,6 +64,14 @@ class App extends Component {
         }
         this.setState({players: players});
     }
+    _userSubmited(payload){
+        let name = payload.user;
+        let cards = payload.data;
+        for(let i=0; i<this.state.players.length; i++){
+
+        }
+    }
+
     reqBlackCard(){
         socket.emit('reqcard');
     }

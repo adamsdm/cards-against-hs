@@ -71,24 +71,34 @@ io.on('connection', function(socket){
     if(!roomsData[room] ){
       console.log("User tried to join room "+room+" which doesn't exist");
       socket.emit('couldnt-join-room');
-    } else {
-
-      socket.username = username;
-      socket.room = room;
-      roomsData[room].players.push(username);
-
-      socket.join(room);
-      // Emit to all other sockets that a player joined
-      io.sockets.in(room).emit('user-joined-room', username);
-      // Emit to the player that he succesfully joined the room
-      socket.emit('succesfully-joined-room');
-      console.log("User "+username+" connected to room " + room);
-      console.log(roomsData[room].players)
+      return;
     }
+
+    // Ensure username is unique
+    for(var i=0; i<roomsData[room].players.length; i++){
+      if(roomsData[room].players[i] == username){
+        socket.emit('username-taken');
+        return;
+      }
+
+    }
+
+    socket.username = username;
+    socket.room = room;
+    roomsData[room].players.push(username);
+
+    socket.join(room);
+    // Emit to all other sockets that a player joined
+    io.sockets.in(room).emit('user-joined-room', username);
+    // Emit to the player that he succesfully joined the room
+    socket.emit('succesfully-joined-room');
+    console.log("User "+username+" connected to room " + room);
+    console.log(roomsData[room].players)
   });
 
   socket.on('submit-cards-from-user', function(payload){
     console.log("User "+payload.user+" submitted: "+payload.data);
+    io.sockets.in(socket.room).emit('user-submitted-cards', payload);
   })
   
   socket.on('reqcard', function () {

@@ -30,6 +30,7 @@ class App extends Component {
         socket.on('get-white-card', this._getWhiteCard.bind(this));
         socket.on('host-left-room', this._hostLeftRoom);
         socket.on('succesfully-joined-room', this._joinedRoom.bind(this));
+        socket.on('username-taken', this._usernameTaken.bind(this));
     }
 
     _updateBlackCard(text, noPicks){ 
@@ -62,6 +63,10 @@ class App extends Component {
     _hostLeftRoom(){
         alert("Host left the game");
         socket.emit('leaveroom', username); 
+    }
+
+    _usernameTaken(){
+        alert("That username is already taken");
     }
 
     submitCards(data){
