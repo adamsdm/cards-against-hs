@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import update from 'immutability-helper';
 import BlackCard from './BlackCard'
+import WhiteCards from './WhiteCards'
 import PlayerList from './PlayerList'
 
 var socket = io.connect();
@@ -133,6 +134,7 @@ class App extends Component {
         <div>
             <h3 id="room-code">Roomcode: {this.state.roomId}</h3>
             <BlackCard bcText={this.state.bcText} />
+            <WhiteCards players={this.state.players} />
             <PlayerList players={this.state.players} />
             {this.state.allHaveSubmitted && 
                 <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
