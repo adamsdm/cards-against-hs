@@ -43,16 +43,19 @@ class App extends Component {
     }
 
     _updateBlackCard(text, noPicks){ 
-        // Clear submitted cards
+        // Clear submitted cards and set that the player is playing this round
         var players = this.state.players;
         for(var i=0; i<players.length; i++){
             players[i].submittedCards = [];
+            players[i].inRound = true;
         }
 
         this.setState({
             bcText: text,
             maxWcSelect: noPicks,
-            players: players
+            players: players,
+            allHaveSubmitted: false,
+            noPlayersInRound: this.state.players.length
         });
 
 
@@ -62,7 +65,8 @@ class App extends Component {
             alert("User "+username+" joined the room");
             let player = {
                 username: username,
-                submittedCards: []
+                submittedCards: [],
+                inRound: false
             }
             this.setState({players: this.state.players.concat([player])});
         }
@@ -76,6 +80,7 @@ class App extends Component {
             }
         }
         this.setState({players: players});
+        this.checkAllSubmitted();
     }
     _userSubmited(payload){
         let players = this.state.players;
@@ -96,18 +101,26 @@ class App extends Component {
 
         this.setState({players: newPlayers});
 
-        //Check if all players have submitted
-        for(var i=0; i<newPlayers.length; i++){
-            if(newPlayers[i].username!= 'HOST')
-                if(newPlayers[i].submittedCards.length == 0)
-                    return;
-        }
-        this.setState({allHaveSubmitted: true});
+        this.checkAllSubmitted();
 
+    }
+    checkAllSubmitted(){
+        let players = this.state.players;
+        let noSubmitted = 0;
+
+        for(var i=0; i<players.length; i++){
+            if(players[i].username!= 'HOST' && players[i].submittedCards.length > 0)
+                noSubmitted++;
+            // If player is not in the round, treat it as submitted
+            if(!players[i].inRound)
+                noSubmitted++;
+        }
+
+        if(noSubmitted == this.state.players.length)
+            this.setState({allHaveSubmitted: true});
     }
 
     reqBlackCard(){
-        console.log(this.state.players.length);
         if(this.state.players.length > 0) {
             socket.emit('reqcard');
             return;

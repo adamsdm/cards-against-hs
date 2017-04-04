@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
 
 class PlayerList extends Component {
+    decideImg(player){
+        console.log(player);
+        if(player.submittedCards.length > 0)
+            return "images/user-icon-submitted.png";
+        else if(!player.inRound){
+            return "images/user-icon-waiting.png";
+        }
+        return "images/user-icon.png"
+    }
+
     renderPlayers(){
-        console.log(this.props.players);
+        // For each of the players
         return this.props.players.map((player, i) => {
-            console.log(player.submittedCards.length);
+            // ignore host
             if(player.username !== 'HOST'){
                 return (
-                    <td key={i} className={(player.submittedCards.length > 0 ? 'submitted' : '')}> 
-                        <img src="images/user-icon.png" height="64px"/><br />
+                    <td key={i}> 
+                        <img src={this.decideImg(player)} height="64px"/><br/>
                         {player.username}
                     </td>
                 );

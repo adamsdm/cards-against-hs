@@ -63,6 +63,7 @@ class App extends Component {
     _hostLeftRoom(){
         alert("Host left the game");
         socket.emit('leaveroom', username); 
+        window.location = "/client.html;";
     }
 
     _usernameTaken(){

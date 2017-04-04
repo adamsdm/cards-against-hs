@@ -109,25 +109,20 @@ io.on('connection', function(socket){
       }
 
       var bci = roomsData[socket.room].bci;
-      var wci = roomsData[socket.room].wci;
 
       // If there are no more white cards in deck 
-      if(wci >= roomsData[socket.room].wc.length){
-        /* TODO */
+      if(bci >= roomsData[socket.room].bc.length){
+        roomsData[socket.room].bci = 0;
+        bci = 0;
       }
 
-      // If there are black cards left in deck
-      if(bci < roomsData[socket.room].bc.length){
-        var bc  = roomsData[socket.room].bc[bci];
-        var noPicks = bc['pick'];
+      var bc  = roomsData[socket.room].bc[bci];
+      var noPicks = bc['pick'];
 
-        // read the text on the card...
-        str = bc['text'];
-        roomsData[socket.room].bci++;
-      } else {
-        var noPicks = '';
-        str = "Thanks for playing!";
-      }
+      // read the text on the card...
+      str = bc['text'];
+      roomsData[socket.room].bci++;
+
 
       // Send black card text to players
       io.sockets.in(socket.room).emit('update-black-card', str, noPicks);
@@ -135,6 +130,14 @@ io.on('connection', function(socket){
 
   socket.on('req-white-card', function(){
     var wci = roomsData[socket.room].wci;
+
+    // If there are no more white cards in deck 
+    if(wci >= roomsData[socket.room].wc.length){
+      roomsData[socket.room].wci = 0;
+      wci = 0;
+    }
+
+
     var wc = roomsData[socket.room].wc[wci];
 
     roomsData[socket.room].wci++;
