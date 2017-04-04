@@ -1,31 +1,45 @@
 import React, { Component } from 'react'
 
 class WhiteCards extends Component {
-    decideImg(player){
 
-        if(player.submittedCards.length > 0)
-            return "images/user-icon-submitted.png";
-        else if(!player.inRound){
-            return "images/user-icon-waiting.png";
-        }
-        return "images/user-icon.png"
-    }
 
     renderSubmitted(player){
-        const indStyle = {
-          color: 'black',
-          fontSize: '22px'
+        const nameStyle = {
+          color: 'red',
+          position: 'absolute',
+          textAlign: 'right',
+          margin: '10px',
+          right: '0px',
+          bottom: '0'
         };
 
+        return(
+            <div className="flipper">
+                <div className="front">
+                    <h2 style={{margin:'10px', fontWeight: 'bold'}}>
+                        Cards<br /> 
+                        Against<br /> 
+                        Humanity <br />
+                    </h2>
+                </div>
+                <div className="back">
+                    {this.renderText(player)}
+                    <p style={nameStyle}> {player.username} </p>
+                </div>
+            </div>
+        )
+ 
+    }
+    renderText(player){
         return player.submittedCards.map((text, i) => {
             return(
                 <div className="white-card-text">
-                    {text}
-                    <br />
-                    <br />
+                    {text} 
+                    <br/>
+                    <br/>
                 </div>
             )
-        }, this)
+        })
     }
 
     renderWhiteCards(){
@@ -35,7 +49,7 @@ class WhiteCards extends Component {
             if(player.username !== 'HOST' && player.inRound && player.submittedCards.length > 0){
                 return (
                     <td key={i}> 
-                        <div className ="white-card">
+                        <div className="flip-container not-flipped" key={i}>
                             {this.renderSubmitted(player)}
                         </div>
                     </td>

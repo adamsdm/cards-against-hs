@@ -7,12 +7,13 @@ body{
     background-color: currentColor;
 }
 
-#req-card{
+#req-card, #flip-cards{
     position:fixed;
     right: 20px;
     top: 20px;
     color: black;
 }
+
 #room-code{
     position:fixed;
     left: 20px;
@@ -27,7 +28,7 @@ body{
 
 .bcText{
     text-align: center;
-    margin-top: 100px;
+    margin-top: 30vh;
 }
 
 .table-container{
@@ -38,8 +39,6 @@ body{
 
 .wc-container{
     width: 100%;
-    position: fixed;
-    bottom: 200px;
 }
 
 #playerList{
@@ -60,7 +59,7 @@ body{
     border-radius: 10px;
 }
 
-.white-card .white-card-text{
+.white-card-text{
     text-align: left;
     font-weight: bold;
     font-size: 18px;

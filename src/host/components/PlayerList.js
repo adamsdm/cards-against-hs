@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 class PlayerList extends Component {
     decideImg(player){
-        console.log(player);
         if(player.submittedCards.length > 0)
             return "images/user-icon-submitted.png";
         else if(!player.inRound){

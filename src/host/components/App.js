@@ -13,7 +13,8 @@ class App extends Component {
           bcText: 'Cards against humanity',
           inRoom: false,
           players: [],
-          allHaveSubmitted: true
+          allHaveSubmitted: true,
+          allCardsFlipped: true
         }
     }
 
@@ -56,11 +57,11 @@ class App extends Component {
             maxWcSelect: noPicks,
             players: players,
             allHaveSubmitted: false,
-            noPlayersInRound: this.state.players.length
+            noPlayersInRound: this.state.players.length,
+            allCardsFlipped: false
         });
-
-
     }
+
     _userJoined(username){
         if(username!='HOST'){
             alert("User "+username+" joined the room");
@@ -119,6 +120,11 @@ class App extends Component {
 
         if(noSubmitted == this.state.players.length)
             this.setState({allHaveSubmitted: true});
+
+        /* TODO */
+        // Show button to flip cards
+        // On click: https://jsfiddle.net/7fk7L1ka/
+        // setState({cardsFlipper: true})
     }
 
     reqBlackCard(){
@@ -129,6 +135,24 @@ class App extends Component {
         alert("No players in room");
     }
 
+    flipCards(){
+        if(this.state.allCardsFlipped){
+         alert("All cards submitted");
+         return;
+        }
+
+        var cards = document.getElementsByClassName("not-flipped");
+
+        // Flip card by card
+        cards[0].classList.add("flip");
+        cards[0].classList.remove("not-flipped");
+
+        console.log(cards.length);
+        // If this is the last card to be flipped
+        if(cards.length == 0)
+            this.setState({allCardsFlipped: true});
+    }
+
     render() {
         return (
         <div>
@@ -136,8 +160,11 @@ class App extends Component {
             <BlackCard bcText={this.state.bcText} />
             <WhiteCards players={this.state.players} />
             <PlayerList players={this.state.players} />
-            {this.state.allHaveSubmitted && 
+            {this.state.allHaveSubmitted && this.state.allCardsFlipped &&
                 <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
+            }
+            {this.state.allHaveSubmitted && !this.state.allCardsFlipped &&
+                <button id="flip-cards" onClick={this.flipCards.bind(this)}> Flip cards </button>
             }
         </div>
         )
