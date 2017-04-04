@@ -164,14 +164,12 @@ io.on('connection', function(socket){
 
     if(socket.username=="HOST"){
       io.sockets.in(socket.room).emit('host-left-room');
+      // Remove host room
+      delete roomsData[socket.room];
+      return;
     }
 
-    console.log(roomsData[socket.room].players);
-
-    // Remove host room if no players left
-    if(roomsData[socket.room].length==0) delete roomsData[socket.room];
-
-    
+    console.log(roomsData[socket.room].players);    
 
     io.sockets.in(socket.room).emit('user-left-room', socket.username);
     console.log("User "+ socket.username +" disconnected");
