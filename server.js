@@ -28,6 +28,10 @@ function sendMsg(msg, room){
   io.sockets.in(room).emit('debug', msg);
 }
 
+
+
+
+// Hot module reloading
 app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
 app.use(webpackHotMiddleware(compiler));
 
@@ -100,6 +104,10 @@ io.on('connection', function(socket){
     console.log("User "+payload.user+" submitted: "+payload.data);
     io.sockets.in(socket.room).emit('user-submitted-cards', payload);
   })
+
+  socket.on('all-cards-shown', function(players){
+    io.sockets.in(socket.room).emit('get-submitted', players);
+  })
   
   socket.on('reqcard', function () {
 
@@ -129,10 +137,13 @@ io.on('connection', function(socket){
   });
 
   socket.on('req-white-card', function(){
+    
+    if(!roomsData[socket.room]) return;
+
     var wci = roomsData[socket.room].wci;
 
     // If there are no more white cards in deck 
-    if(wci >= roomsData[socket.room].wc.length){
+    if(wci && wci >= roomsData[socket.room].wc.length){
       roomsData[socket.room].wci = 0;
       wci = 0;
     }
@@ -146,6 +157,22 @@ io.on('connection', function(socket){
   })
 
   socket.on('disconnect', function(){
+
+    if(socket.username=="HOST"){
+      io.sockets.in(socket.room).emit('host-left-room');
+      // Kick all players in room
+
+      // Remove host room
+      delete roomsData[socket.room];
+      return;
+    }
+
+    // If room doesnt exist
+    if(!roomsData[socket.room]){
+      socket.emit('host-left-room');
+      return;
+    }
+
     // If socket isn't in a room, do nothing
     if(!socket.room){
       console.log(socket.username + " disconnected");
@@ -162,12 +189,6 @@ io.on('connection', function(socket){
       }
     }
 
-    if(socket.username=="HOST"){
-      io.sockets.in(socket.room).emit('host-left-room');
-      // Remove host room
-      delete roomsData[socket.room];
-      return;
-    }
 
     console.log(roomsData[socket.room].players);    
 

@@ -118,13 +118,9 @@ class App extends Component {
                 noSubmitted++;
         }
 
-        if(noSubmitted == this.state.players.length)
+        if(noSubmitted == this.state.players.length){
             this.setState({allHaveSubmitted: true});
-
-        /* TODO */
-        // Show button to flip cards
-        // On click: https://jsfiddle.net/7fk7L1ka/
-        // setState({cardsFlipper: true})
+        }
     }
 
     reqBlackCard(){
@@ -137,7 +133,7 @@ class App extends Component {
 
     flipCards(){
         if(this.state.allCardsFlipped){
-         alert("All cards submitted");
+            alert("All cards flipped");
          return;
         }
 
@@ -149,8 +145,10 @@ class App extends Component {
 
         console.log(cards.length);
         // If this is the last card to be flipped
-        if(cards.length == 0)
+        if(cards.length == 0){
             this.setState({allCardsFlipped: true});
+            socket.emit('all-cards-shown', this.state.players);
+        }
     }
 
     render() {

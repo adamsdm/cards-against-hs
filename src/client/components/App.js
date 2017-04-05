@@ -18,7 +18,8 @@ class App extends Component {
           cardsSubmitted: false,
           inRoom: false,
           username: '',
-          roomcode: ''
+          roomcode: '',
+          othersSubmitted: {}
         }
     }
   // Socket management
@@ -31,6 +32,13 @@ class App extends Component {
         socket.on('host-left-room', this._hostLeftRoom);
         socket.on('succesfully-joined-room', this._joinedRoom.bind(this));
         socket.on('username-taken', this._usernameTaken.bind(this));
+        socket.on('get-submitted', this._getOthersSubmitions.bind(this));
+    }
+
+    _getOthersSubmitions(players){
+        for(let i=0; i<players.length; i++){
+            console.log(players[i].username+ ": "+players[i].submittedCards);
+        }
     }
 
     _updateBlackCard(text, noPicks){ 
