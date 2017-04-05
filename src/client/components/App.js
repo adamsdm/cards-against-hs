@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import BlackCard from './BlackCard'
 import WhiteCards from './WhiteCards'
-import JoinRoomForm from'./JoinRoomForm'
+import JoinRoomForm from './JoinRoomForm'
+import Submissions from './Submissions'
 
 var _ = require('underscore');
 
@@ -19,7 +20,7 @@ class App extends Component {
           inRoom: false,
           username: '',
           roomcode: '',
-          othersSubmitted: {}
+          othersSubmitted: []
         }
     }
   // Socket management
@@ -29,16 +30,25 @@ class App extends Component {
         socket.on('update-black-card', this._updateBlackCard.bind(this));
         socket.on('couldnt-join-room', this._couldntJoinRoom.bind(this));
         socket.on('get-white-card', this._getWhiteCard.bind(this));
-        socket.on('host-left-room', this._hostLeftRoom);
+        socket.on('host-left-room', this._hostLeftRoom.bind(this));
         socket.on('succesfully-joined-room', this._joinedRoom.bind(this));
         socket.on('username-taken', this._usernameTaken.bind(this));
         socket.on('get-submitted', this._getOthersSubmitions.bind(this));
     }
 
+
     _getOthersSubmitions(players){
+        let othersSubmittions = [];
+
         for(let i=0; i<players.length; i++){
-            console.log(players[i].username+ ": "+players[i].submittedCards);
+            
+            let submission = {
+                uname: players[i].username,
+                cards: players[i].submittedCards
+            };
+            othersSubmittions.push(submission);
         }
+        this.setState({othersSubmitted: othersSubmittions});
     }
 
     _updateBlackCard(text, noPicks){ 
@@ -46,7 +56,8 @@ class App extends Component {
             bcText: text,
             maxWcSelect: noPicks,
             cardsSubmitted: false,
-            selectedCards: []
+            selectedCards: [],
+            othersSubmitted: []
         });
 
         if(this.state.whiteCards.length<5)
@@ -70,8 +81,8 @@ class App extends Component {
 
     _hostLeftRoom(){
         alert("Host left the game");
-        socket.emit('leaveroom', username); 
-        window.location = "/client.html;";
+        this.setState({inRoom: false});
+        socket.emit('leaveroom'); 
     }
 
     _usernameTaken(){
@@ -94,6 +105,12 @@ class App extends Component {
 
     }
 
+    voteOnSubmission(submission){
+        // Send to server
+        socket.emit('user-voted', submission);
+        this.setState({othersSubmitted: []});
+    }
+
     tryJoinRoom(data){
         console.log(data);
         this.setState({
@@ -113,8 +130,11 @@ class App extends Component {
                 {!this.state.cardsSubmitted && this.state.bcText != "Thanks for playing!" && this.state.whiteCards.length>0 &&
                     <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect} submit={this.submitCards.bind(this)}/>
                 }
-                {this.state.cardsSubmitted &&
-                    <h3> Waiting for next round... </h3>
+                {this.state.cardsSubmitted && this.state.othersSubmitted.length == 0 &&
+                    <h3> Waiting for other players... </h3>
+                }
+                {this.state.othersSubmitted.length>0 && 
+                    <Submissions voteOnSubmission={this.voteOnSubmission.bind(this)} submissions={this.state.othersSubmitted}/>
                 }
             </div>
         )

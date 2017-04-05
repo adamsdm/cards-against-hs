@@ -33,7 +33,7 @@ class WhiteCards extends Component {
     renderText(player){
         return player.submittedCards.map((text, i) => {
             return(
-                <div className="white-card-text">
+                <div className="white-card-text" key={i}>
                     {text} 
                     <br/>
                     <br/>

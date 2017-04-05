@@ -4,6 +4,8 @@ import BlackCard from './BlackCard'
 import WhiteCards from './WhiteCards'
 import PlayerList from './PlayerList'
 
+var _ = require('underscore');
+
 var socket = io.connect();
 
 class App extends Component {
@@ -14,7 +16,8 @@ class App extends Component {
           inRoom: false,
           players: [],
           allHaveSubmitted: true,
-          allCardsFlipped: true
+          allCardsFlipped: true,
+          allVoted: true
         }
     }
 
@@ -33,6 +36,7 @@ class App extends Component {
         socket.on('user-joined-room', this._userJoined.bind(this));
         socket.on('user-left-room', this._userLeft.bind(this));
         socket.on('user-submitted-cards', this._userSubmited.bind(this));
+        socket.on('got-vote', this._updateVotes.bind(this));
     }
         
     _joinedRoom(){
@@ -58,21 +62,24 @@ class App extends Component {
             players: players,
             allHaveSubmitted: false,
             noPlayersInRound: this.state.players.length,
-            allCardsFlipped: false
+            allCardsFlipped: false,
+            allVoted: false,
+            votes: []
         });
     }
 
     _userJoined(username){
         if(username!='HOST'){
-            alert("User "+username+" joined the room");
             let player = {
                 username: username,
                 submittedCards: [],
-                inRound: false
+                inRound: false,
+                score: 0
             }
             this.setState({players: this.state.players.concat([player])});
         }
     }
+
     _userLeft(username){
         var players = this.state.players;
         for(var i=0; i<this.state.players.length; i++){
@@ -84,6 +91,58 @@ class App extends Component {
         this.setState({players: players});
         this.checkAllSubmitted();
     }
+
+    _updateVotes(submission){
+        var votes = this.state.votes;
+        votes.push(submission.uname);
+        this.setState({votes: votes});
+
+        // If everyone has voted
+        if(votes.length==this.state.noPlayersInRound){
+
+            console.log("All voted");
+            this.setState({allVoted: true});
+            let voteCount = {};
+
+            // Count votes
+            var maxVotes=-1;
+            var winners=[]; // Array since votes may be even
+            for (var i = 0, j = votes.length; i < j; i++) {
+                var name = votes[i];
+                voteCount[name] = (voteCount[name] || 0) + 1;
+
+                // If found new max
+                if(voteCount[name] > maxVotes){
+                    maxVotes = voteCount[name];
+                    winners = [];
+                    winners.push(name);
+                } else if(voteCount[name] == maxVotes){
+                    console.log("Winners:" + winners)
+                    winners.push(name);
+                }
+            }
+            console.log(voteCount);
+            console.log(winners);
+
+            // If draw
+            if(winners.length>1){
+                this.setState({bcText: "DRAW! Winners: "+winners});
+            } else {
+                this.setState({bcText: "Winner: "+winners});
+            }
+
+            // Update score
+            var players = this.state.players;
+            for(var i=0; i<players.length; i++){
+                if ( _.contains(winners,players[i].username) ){
+                    players[i].score = players[i].score+1;
+                }
+            }
+            this.setState({players: players});
+        }
+
+    }
+
     _userSubmited(payload){
         let players = this.state.players;
         let name = payload.user;
@@ -106,6 +165,7 @@ class App extends Component {
         this.checkAllSubmitted();
 
     }
+
     checkAllSubmitted(){
         let players = this.state.players;
         let noSubmitted = 0;
@@ -143,7 +203,6 @@ class App extends Component {
         cards[0].classList.add("flip");
         cards[0].classList.remove("not-flipped");
 
-        console.log(cards.length);
         // If this is the last card to be flipped
         if(cards.length == 0){
             this.setState({allCardsFlipped: true});
@@ -158,7 +217,7 @@ class App extends Component {
             <BlackCard bcText={this.state.bcText} />
             <WhiteCards players={this.state.players} />
             <PlayerList players={this.state.players} />
-            {this.state.allHaveSubmitted && this.state.allCardsFlipped &&
+            {this.state.allHaveSubmitted && this.state.allCardsFlipped && this.state.allVoted &&
                 <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
             }
             {this.state.allHaveSubmitted && !this.state.allCardsFlipped &&

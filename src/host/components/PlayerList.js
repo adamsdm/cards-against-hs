@@ -18,7 +18,8 @@ class PlayerList extends Component {
                 return (
                     <td key={i}> 
                         <img src={this.decideImg(player)} height="64px"/><br/>
-                        {player.username}
+                        {player.username} <br />
+                        Score: {player.score}
                     </td>
                 );
             }

@@ -21,7 +21,6 @@ class JoinRoomForm extends Component {
         var change = {};
         change[name] = e.target.value;
         this.setState(change);
-        console.log(this.state);
     }
 
     handleSubmit(event) {

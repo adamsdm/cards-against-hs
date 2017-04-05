@@ -100,10 +100,20 @@ io.on('connection', function(socket){
     console.log(roomsData[room].players)
   });
 
+  socket.on('leaveroom', function(){
+    console.log("User "+socket.username+" left room "+socket.room);
+    socket.leave(socket.room);
+  })
+
   socket.on('submit-cards-from-user', function(payload){
     console.log("User "+payload.user+" submitted: "+payload.data);
     io.sockets.in(socket.room).emit('user-submitted-cards', payload);
   })
+
+  socket.on('user-voted', function(submission){
+    console.log(socket.username+" voted for "+submission);
+    io.sockets.in(socket.room).emit('got-vote', submission);
+  });
 
   socket.on('all-cards-shown', function(players){
     io.sockets.in(socket.room).emit('get-submitted', players);
