@@ -11,10 +11,10 @@ The players now draw a white card that fits in the blank space of the white card
 The player who makes the funniest sentence (voted by the oter players) wins and gets one point.
 
 ### Installation (DEV)
-`git clone https://github.com/adamsdm/cards-against.git` - clone the repo
-`npm install` - install dependencies
-`webpack` - builds the project
-`npm run start` - start a (dev)server with hot module reloading
+* `git clone https://github.com/adamsdm/cards-against.git` - clone the repo
+* `npm install` - install dependencies
+* `webpack` - builds the project
+* `npm run start` - start a (dev)server with hot module reloading
 
 Navigate to the server ip on port 3000 (typically `192.168.0.*:3000`, or `localhost:3000` if on the server computer).
 Now to join the game, on a mobile device go to the ip address of the server (typically `192.168.0.*:3000`) and you will be
