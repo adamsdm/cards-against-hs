@@ -184,11 +184,11 @@ class App extends Component {
     }
 
     reqBlackCard(){
-        if(this.state.players.length > 0) {
+        if(this.state.players.length > 1) {
             socket.emit('reqcard');
             return;
         }
-        alert("No players in room");
+        alert("Not enough players");
     }
 
     flipCards(){

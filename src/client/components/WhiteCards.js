@@ -13,10 +13,10 @@ class WhiteCards extends Component {
 
     }
 
-    addOrRemSelected(isInc, data){
+    addOrRemSelected(isAdding, data){
         this.state.selectedCards = _.compact(this.state.selectedCards);
         let _noSelected = this.state.noSelected; 
-        if(isInc){
+        if(isAdding){
             _noSelected++;
             this.state.selectedCards[data.ind-1] = data.text;
         } 

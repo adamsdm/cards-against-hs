@@ -8,11 +8,13 @@ class Submissions extends Component {
 
     renderSubmissions(){
         return this.props.submissions.map((user, i) => {
-            return (
-                <div className="submission" key={i} onClick={() => this.handleSelect(user)}>
-                    <h4>{user.cards}</h4>
-                </div>
-            );
+            if(user.cards.length > 0 && user.uname != this.props.uname && this.props.inround){    
+                return (
+                    <div className="submission" key={i} onClick={() => this.handleSelect(user)}>
+                        <h4>{user.cards}</h4>
+                    </div>
+                );
+            }
         });
     }
 

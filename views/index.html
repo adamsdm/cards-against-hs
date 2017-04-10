@@ -18,16 +18,12 @@
         var socket = io.connect();
 
         $('#create-game').click( function() {
-            var roomCode = "";
-            var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-            for( var i=0; i < 4; i++ ){
-                roomCode += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-
-            socket.emit('createRoom', roomCode);
-            window.location = "/host.html#"+roomCode;
-            
+            socket.emit('create-room');
         });
+
+        socket.on('room-created', function(roomcode){
+            window.location = "/host.html#"+roomcode;
+        })
 
 
     </script>

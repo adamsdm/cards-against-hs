@@ -9,6 +9,7 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 
+
 var _ = require('underscore');
 var cards = require('./data.json');
 
@@ -22,6 +23,12 @@ var whiteCards = cards["whiteCards"];
 var roomsData = {};
 
 
+/*
+// Hot module reloading
+app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
+app.use(webpackHotMiddleware(compiler));
+*/
+
 
 //Debug
 function sendMsg(msg, room){
@@ -29,11 +36,17 @@ function sendMsg(msg, room){
 }
 
 
+function createRandString(){
+  var roomCode = "";
+  var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
 
+  for( var i=0; i < 4; i++ ){
+      roomCode += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
 
-// Hot module reloading
-app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
-app.use(webpackHotMiddleware(compiler));
+  return roomCode;
+}
+
 
 
 app.use(express.static(__dirname + '/public')); 
@@ -49,10 +62,24 @@ app.get('/host.html', function (req, res) {
   res.sendFile(__dirname + '/views/host.html');
 });
 
+
 io.on('connection', function(socket){
   console.log("A user connected");
 
-  socket.on('createRoom', function(roomId){
+
+
+
+
+  socket.on('create-room', function(){
+
+    var roomId = createRandString();
+
+    // Do until createRandString() returns a unique room code
+    while(roomsData[roomId]){
+      roomId = createRandString();
+      console.log(roomId);
+    }
+
     console.log("Creating room "+roomId);
     // First user to create the room is set to host
     socket.isHost = true;    
@@ -67,7 +94,16 @@ io.on('connection', function(socket){
       wc: _.shuffle(whiteCards),
       players: []
     };
+
+
+    socket.emit('room-created', roomId);
+
   });
+
+
+
+
+
 
   // when the client emits 'joinroom', this listens and executes
   socket.on('joinroom', function(username, room){;

@@ -8,20 +8,24 @@ var _ = require('underscore');
 
 var socket = io.connect();
 
+const initialState = {
+    bcText: 'Waiting for next round',
+    whiteCards: [],
+    selectedCards: [],
+    maxWcSelect: 0,
+    cardsSubmitted: false,
+    inRoom: false,
+    username: '',
+    roomcode: '',
+    othersSubmitted: [],
+    inRound: false
+    }
+
 class App extends Component {
+
     constructor(props, context) {
         super(props, context)
-        this.state = {
-          bcText: 'Waiting for next round',
-          whiteCards: [],
-          selectedCards: [],
-          maxWcSelect: 0,
-          cardsSubmitted: false,
-          inRoom: false,
-          username: '',
-          roomcode: '',
-          othersSubmitted: []
-        }
+        this.state = initialState;
     }
   // Socket management
     componentDidMount() {  
@@ -57,7 +61,8 @@ class App extends Component {
             maxWcSelect: noPicks,
             cardsSubmitted: false,
             selectedCards: [],
-            othersSubmitted: []
+            othersSubmitted: [],
+            inRound: true
         });
 
         if(this.state.whiteCards.length<5)
@@ -81,7 +86,7 @@ class App extends Component {
 
     _hostLeftRoom(){
         alert("Host left the game");
-        this.setState({inRoom: false});
+        this.setState(initialState);
         socket.emit('leaveroom'); 
     }
 
@@ -127,14 +132,19 @@ class App extends Component {
         return (
             <div className="container">
                 <BlackCard bcText = {this.state.bcText} />
-                {!this.state.cardsSubmitted && this.state.bcText != "Thanks for playing!" && this.state.whiteCards.length>0 &&
+                {!this.state.cardsSubmitted && this.state.whiteCards.length>0 &&
                     <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect} submit={this.submitCards.bind(this)}/>
                 }
                 {this.state.cardsSubmitted && this.state.othersSubmitted.length == 0 &&
                     <h3> Waiting for other players... </h3>
                 }
                 {this.state.othersSubmitted.length>0 && 
-                    <Submissions voteOnSubmission={this.voteOnSubmission.bind(this)} submissions={this.state.othersSubmitted}/>
+                    <Submissions 
+                        voteOnSubmission={this.voteOnSubmission.bind(this)} 
+                        uname={this.state.username} 
+                        inround={this.state.inRound} 
+                        submissions={this.state.othersSubmitted}
+                    />
                 }
             </div>
         )
