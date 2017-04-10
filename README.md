@@ -13,7 +13,7 @@ The player who makes the funniest sentence (voted by the oter players) wins and 
 ### Installation (DEV)
 Make sure `node` and `npm` is installed. To build the project, `Webpack` needs to be installed.
 
-* `git clone https://github.com/adamsdm/cards-against.git` - clone the repo
+* `git clone https://gitlab.ida.liu.se/adaso578/cards-against.git` - clone the repo
 * `npm install` - install dependencies
 * `webpack` - builds the project
 * `npm run start` - start a server with hot module reloading
