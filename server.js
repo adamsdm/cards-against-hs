@@ -8,14 +8,7 @@ var path = require('path');
 var _ = require('underscore');
 var cards = require('./data.json');
 
-
-
-
-
-
-
-
-if ( app.get('env') === 'development' ) {
+if ( app.get('env') == 'development' ) {
   console.log("STARTING DEV SERVER");
 
   var errorHandler = require('express-error-handler');
