@@ -4,22 +4,34 @@
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
-        <style>
-    body{background-color: lightblue;}
-    .btn{width: 300px;}
-    .content{
-        position: absolute;
-        margin: auto;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 300px;
-        height: 350px;
-    }
-    .title{
-        text-align: center;
-    }
+    <style>
+        body{
+            background: linear-gradient(30deg, #4ECDC4, #556270);
+        }
+        .button{
+            width: 420px;
+            background-color: rgba(0,0,0,0);
+            border: 2px solid #c7c7c7;
+            border-radius: 20px;
+            color: #c7c7c7;
+            padding: 15px 32px;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+        .button:hover{
+            background-color: rgba(85,98,112,0.6);
+        }
+        .button h2{
+            margin: 5px;
+        }
+
+        .title h1{
+            text-align: left;
+            font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+            color: #c7c7c7;
+            font-size: 100px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -30,10 +42,18 @@
     </script>
 
 
-    <div class="content">
-        <h1 class="title"> Cards Against Humanity </h1>
-        <button id="create-game" class="btn btn-primary"><h2>Create new game</h2></button><br/>
-        <button id="join-game" class="btn btn-info"><h2>Join game</h2></button>
+    <div class="container">
+        <div class=title>
+            <h1> Cards <br/>
+                Against <br/>
+                Humanity 
+            </h1>    
+        </div>
+        
+        <div class="content">
+            <button id="create-game" class="button"><h2>Create new game</h2></button><br/>
+            <button id="join-game" class="button"><h2>Join game</h2></button>
+        </div>
     </div>
 
     
