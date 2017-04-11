@@ -4,6 +4,23 @@
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+        <style>
+    body{background-color: lightblue;}
+    .btn{width: 300px;}
+    .content{
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 300px;
+        height: 350px;
+    }
+    .title{
+        text-align: center;
+    }
+    </style>
 </head>
 
 <body>
@@ -12,10 +29,13 @@
             window.location = "/client.html";
     </script>
 
-    <div class="container">
-        <button id="create-game" class="btn btn-primary">Create new game</button><br/>
-        <button id="join-game" class="btn btn-info">Join game</button>
+
+    <div class="content">
+        <h1 class="title"> Cards Against Humanity </h1>
+        <button id="create-game" class="btn btn-primary"><h2>Create new game</h2></button><br/>
+        <button id="join-game" class="btn btn-info"><h2>Join game</h2></button>
     </div>
+
     
     <script>
         var socket = io.connect(window.location.host);
@@ -31,8 +51,6 @@
         socket.on('room-created', function(roomcode){
             window.location = "/host.html#"+roomcode;
         })
-
-
     </script>
 
     

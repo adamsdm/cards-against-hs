@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 
 class WhiteCards extends Component {
-
+    createMarkup(text) {
+        return {__html: text};
+    }
 
     renderSubmitted(player){
         const nameStyle = {
@@ -24,7 +26,6 @@ class WhiteCards extends Component {
                 </div>
                 <div className="back">
                     {this.renderText(player)}
-                    <p style={nameStyle}> {player.username} </p>
                 </div>
             </div>
         )
@@ -33,11 +34,7 @@ class WhiteCards extends Component {
     renderText(player){
         return player.submittedCards.map((text, i) => {
             return(
-                <div className="white-card-text" key={i}>
-                    {text} 
-                    <br/>
-                    <br/>
-                </div>
+                <div className="white-card-text" key={i} dangerouslySetInnerHTML={this.createMarkup(text+'<br/><br/>')}></div>
             )
         })
     }
