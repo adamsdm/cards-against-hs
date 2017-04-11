@@ -6,8 +6,8 @@
   "scripts": {
     "start:dev": "NODE_ENV=development node server.js",
     "start:prod": "NODE_ENV=production node server.js",
-    "start:dev-win": "set NODE_ENV=development && node server.js",
-    "start:prod-win": "set NODE_ENV=production && node server.js",
+    "start:dev-win": "set NODE_ENV=development&& node server.js",
+    "start:prod-win": "set NODE_ENV=production&& node server.js",
     "build:dev": "webpack --config webpack.config.dev.js --progress --profile --colors",
     "build:prod": "webpack --config webpack.config.prod.js --progress --profile --colors"
   },
