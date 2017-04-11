@@ -71,7 +71,6 @@ class App extends Component {
     }
 
     _joinedRoom(){
-        alert("Joined room "+this.state.roomcode);
         this.setState({inRoom: true });
     }
 

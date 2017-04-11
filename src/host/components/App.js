@@ -22,13 +22,12 @@ class App extends Component {
     }
 
     componentDidMount() {  
+        // 
         var roomId = window.location.href.split('#')[1];
         this.setState({roomId: roomId});
         if(window.location.hash) {
           socket.emit('joinroom', "HOST", roomId );
-        } else {
-          alert("Invalid url");
-        }
+        } 
 
         socket.on('succesfully-joined-room', this._joinedRoom.bind(this));
         socket.on('couldnt-join-room', this._couldntJoinRoom.bind(this));
@@ -45,7 +44,7 @@ class App extends Component {
 
     _couldntJoinRoom(){
         alert("Couldn't join room "+this.state.roomId);
-        this.setState({inRoom: true});
+        this.setState({inRoom: false});
     }
 
     _updateBlackCard(text, noPicks){ 
@@ -81,15 +80,24 @@ class App extends Component {
     }
 
     _userLeft(username){
+        var noPlayersInRound = this.state.noPlayersInRound;
         var players = this.state.players;
+
         for(var i=0; i<this.state.players.length; i++){
             if(this.state.players[i].username === username){
+
+                if(this.state.players[i].inRound){
+                    noPlayersInRound--;
+                    this.setState({noPlayersInRound: noPlayersInRound});
+                }
+
                 players.splice(i, 1);
                 break;
             }
         }
         this.setState({players: players});
         this.checkAllSubmitted();
+        this.checkAllVoted()
     }
 
     _updateVotes(submission){
@@ -98,6 +106,12 @@ class App extends Component {
         this.setState({votes: votes});
 
         // If everyone has voted
+        this.checkAllVoted();
+
+    }
+
+    checkAllVoted(){
+        var votes = this.state.votes;
         if(votes.length==this.state.noPlayersInRound){
 
             console.log("All voted");
@@ -140,7 +154,6 @@ class App extends Component {
             }
             this.setState({players: players});
         }
-
     }
 
     _userSubmited(payload){
@@ -211,19 +224,25 @@ class App extends Component {
     }
 
     render() {
+        if(!this.state.inRoom){
+            return <h1>Oops :( </h1>;
+        }
+
         return (
-        <div>
-            <h3 id="room-code">Roomcode: {this.state.roomId}</h3>
-            <BlackCard bcText={this.state.bcText} />
-            <WhiteCards players={this.state.players} />
-            <PlayerList players={this.state.players} />
-            {this.state.allHaveSubmitted && this.state.allCardsFlipped && this.state.allVoted &&
-                <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
-            }
-            {this.state.allHaveSubmitted && !this.state.allCardsFlipped &&
-                <button id="flip-cards" onClick={this.flipCards.bind(this)}> Flip cards </button>
-            }
-        </div>
+            <div>
+                <h3 id="room-code">Roomcode: {this.state.roomId}</h3>
+                <div className="main-content">
+                    <BlackCard bcText={this.state.bcText} />
+                    <WhiteCards players={this.state.players} />
+                </div>
+                <PlayerList players={this.state.players} />
+                {this.state.allHaveSubmitted && this.state.allCardsFlipped && this.state.allVoted &&
+                    <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
+                }
+                {this.state.allHaveSubmitted && !this.state.allCardsFlipped &&
+                    <button id="flip-cards" onClick={this.flipCards.bind(this)}> Flip cards </button>
+                }
+            </div>
         )
     }
 }
