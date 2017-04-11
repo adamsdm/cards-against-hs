@@ -15,8 +15,18 @@ Make sure `node` and `npm` is installed. To build the project, `Webpack` needs t
 
 * `git clone https://gitlab.ida.liu.se/adaso578/cards-against.git` - clone the repo
 * `npm install` - install dependencies
-* `webpack` - builds the project
-* `npm run start` - start a server with hot module reloading
+* build the project with
+	* `npm run build:dev` for development or
+	* `npm run build:prod` for production
+* start the server with 
+	* `npm run start:dev` for development or
+	* `npm run start:prod` for production
+
+```
+	If npm run start:dev/prod fails, you are probably on Windows.
+	Check package.json and change NODE_ENV manualy with SET NODE_ENV=production/development.
+	Then run the command without NODE_ENV=development/production
+```
 
 Navigate to the server ip on port 3000 (typically `192.168.0.*:3000`, or `localhost:3000` if on the server computer).
 To join the game, go to the ip address of the server (typically `192.168.0.*:3000`) and you will be

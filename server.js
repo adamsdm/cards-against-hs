@@ -2,18 +2,38 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-
 var path = require('path');
-var config = require('./webpack.config.js');
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
 
 
 var _ = require('underscore');
 var cards = require('./data.json');
 
-var compiler = webpack(config);
+
+
+
+
+
+
+
+if ( app.get('env') === 'development' ) {
+  console.log("STARTING DEV SERVER");
+
+  var errorHandler = require('express-error-handler');
+  var webpack = require('webpack');
+  var config = require('./webpack.config.dev.js');
+  var compiler = webpack(config);
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+
+  app.use(errorHandler());
+
+  // Hot module reloading
+  app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
+  app.use(webpackHotMiddleware(compiler));
+}
+
+
+
 
 
 var blackCards = cards["blackCards"];
@@ -24,9 +44,8 @@ var roomsData = {};
 
 
 
-// Hot module reloading
-app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
-app.use(webpackHotMiddleware(compiler));
+
+
 
 
 

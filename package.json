@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start:dev": "NODE_ENV=development node server.js",
+    "start:prod": "NODE_ENV=production node server.js",
+    "build:dev": "webpack --config webpack.config.dev.js --progress --profile --colors",
+    "build:prod": "webpack --config webpack.config.prod.js --progress --profile --colors"
   },
   "author": "Adam Söderström",
   "license": "MIT",
@@ -16,12 +18,11 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-react-hmre": "^1.1.1",
     "express": "^4.15.2",
+    "express-error-handler": "^1.1.0",
     "immutability-helper": "^2.1.2",
     "jquery": "^3.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-redux": "^5.0.3",
-    "redux": "^3.6.0",
     "socket.io": "^1.7.3",
     "underscore": "^1.8.3",
     "webpack": "^2.3.1",
