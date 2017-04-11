@@ -3,31 +3,25 @@
 
 ### About
 This is an implementation of the popular party game "Cards against humanity".
-The came consists of two pages, one 'host' page and one 'client' page.
 
 The game starts by drawing a black card which contains a sentence with a blank space.
 All players have white cards on their hand where each white card contains a word or a sentence.
 The players now draw a white card that fits in the blank space of the white card.
 The player who makes the funniest sentence (voted by the oter players) wins and gets one point.
 
-### Installation (DEV)
+### Installation
 Make sure `node` and `npm` is installed. To build the project, `Webpack` needs to be installed.
 
 * `git clone https://gitlab.ida.liu.se/adaso578/cards-against.git` - clone the repo
 * `npm install` - install dependencies
-* build the project with
-	* `npm run build:dev` for development or
-	* `npm run build:prod` for production
+* build the project with 
+	* `npm run build:dev` for development
+	* `npm run build:prod`for production
 * start the server with 
-	* `npm run start:dev` for development or
-	* `npm run start:prod` for production
+	* `npm run start:dev` or `npm run start:dev-win` for development
+	* `npm run start:prod` or `npm run build:prod-win` for production
 
-```
-	If npm run start:dev/prod fails, you are probably on Windows.
-	Check package.json and change NODE_ENV manualy with SET NODE_ENV=production/development.
-	Then run the command without NODE_ENV=development/production
-```
-
+#### Run in development
 Navigate to the server ip on port 3000 (typically `192.168.0.*:3000`, or `localhost:3000` if on the server computer).
 To join the game, go to the ip address of the server (typically `192.168.0.*:3000`) and you will be
 autodirected to `/client.html`. Enter a username and the roomcode to join the room.
