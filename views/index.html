@@ -12,13 +12,20 @@
             window.location = "/client.html";
     </script>
 
-    <button id="create-game">Create new game</button>
+    <div class="container">
+        <button id="create-game" class="btn btn-primary">Create new game</button><br/>
+        <button id="join-game" class="btn btn-info">Join game</button>
+    </div>
     
     <script>
-        var socket = io.connect();
+        var socket = io.connect(window.location.host);
 
         $('#create-game').click( function() {
             socket.emit('create-room');
+        });
+
+        $('#join-game').click( function() {
+            window.location = "/client.html";
         });
 
         socket.on('room-created', function(roomcode){

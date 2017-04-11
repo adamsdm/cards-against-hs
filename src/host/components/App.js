@@ -6,7 +6,7 @@ import PlayerList from './PlayerList'
 
 var _ = require('underscore');
 
-var socket = io.connect();
+var socket = io.connect(window.location.host);
 
 class App extends Component {
     constructor(props, context) {

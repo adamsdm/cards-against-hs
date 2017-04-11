@@ -6,7 +6,8 @@ import Submissions from './Submissions'
 
 var _ = require('underscore');
 
-var socket = io.connect();
+var socket = io.connect(window.location.host);
+console.log(window.location.host);
 
 const initialState = {
     bcText: 'Waiting for next round',

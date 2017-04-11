@@ -23,11 +23,11 @@ var whiteCards = cards["whiteCards"];
 var roomsData = {};
 
 
-/*
+
 // Hot module reloading
 app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
 app.use(webpackHotMiddleware(compiler));
-*/
+
 
 
 //Debug
@@ -245,6 +245,8 @@ io.on('connection', function(socket){
 });
 
 
-server.listen(3000, function(){
-  console.log('listening on *:3000');
+var port = process.env.PORT || 3000;
+
+server.listen(port, function(){
+  console.log('listening on port:'+port);
 });
