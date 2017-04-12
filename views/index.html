@@ -6,32 +6,35 @@
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <style>
         body{
-            background: linear-gradient(30deg, #4ECDC4, #556270);
+            background: black;
         }
         .button{
             width: 420px;
             background-color: rgba(0,0,0,0);
-            border: 2px solid #c7c7c7;
+            border: 2px solid white;
             border-radius: 20px;
-            color: #c7c7c7;
+            color: white;
             padding: 15px 32px;
             margin: 5px;
             transition: all 0.2s;
         }
         .button:hover{
             background-color: rgba(85,98,112,0.6);
+            letter-spacing: 2;
         }
         .button h2{
             margin: 5px;
+            font-weight: 100;
         }
 
         .title h1{
             text-align: left;
             font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
-            color: #c7c7c7;
+            color: white;
             font-size: 100px;
             font-weight: bold;
         }
+
     </style>
 </head>
 
@@ -46,7 +49,7 @@
         <div class=title>
             <h1> Cards <br/>
                 Against <br/>
-                Humanity 
+                Homo Sapiens
             </h1>    
         </div>
         
@@ -55,7 +58,6 @@
             <button id="join-game" class="button"><h2>Join game</h2></button>
         </div>
     </div>
-
     
     <script>
         var socket = io.connect(window.location.host);

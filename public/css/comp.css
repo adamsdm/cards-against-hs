@@ -12,6 +12,7 @@ body{
     right: 20px;
     top: 20px;
     color: black;
+    z-index: 999;
 }
 
 #room-code{
@@ -19,7 +20,7 @@ body{
     left: 20px;
     top: 20px;
     color: black;
-
+    z-index: 999;
     margin: 0px;
     padding: 10px;
     border-radius: 999em;
