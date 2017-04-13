@@ -62,13 +62,13 @@
     <script>
         var socket = io.connect(window.location.host);
 
-        $('#create-game').click( function() {
+        document.getElementById('create-game').onclick = function() {
             socket.emit('create-room');
-        });
+        };
 
-        $('#join-game').click( function() {
+        document.getElementById('join-game').onclick = function() {
             window.location = "/client.html";
-        });
+        };
 
         socket.on('room-created', function(roomcode){
             window.location = "/host.html#"+roomcode;

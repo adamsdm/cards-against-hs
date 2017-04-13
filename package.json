@@ -21,7 +21,6 @@
     "express": "^4.15.2",
     "express-error-handler": "^1.1.0",
     "immutability-helper": "^2.1.2",
-    "jquery": "^3.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "socket.io": "^1.7.3",
