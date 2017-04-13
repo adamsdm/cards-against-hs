@@ -6,7 +6,7 @@ var path = require('path');
 
 
 var _ = require('underscore');
-var cards = require('./data.json');
+var cards = require('./cards/baseSet.json');
 
 if ( app.get('env') == 'development' ) {
   console.log("STARTING DEV SERVER");
