@@ -6,8 +6,8 @@
   "scripts": {
     "start:dev": "./node_modules/.bin/cross-env NODE_ENV=development node server.js",
     "start:prod": "./node_modules/.bin/cross-env NODE_ENV=production node server.js",
-    "build:dev": "webpack --config webpack.config.dev.js --progress --profile --colors",
-    "build:prod": "webpack --config webpack.config.prod.js --progress --profile --colors"
+    "build:dev": "./node_modules/.bin/webpack --config webpack.config.dev.js --progress --profile --colors",
+    "build:prod": "./node_modules/.bin/webpack --config webpack.config.prod.js --progress --profile --colors"
   },
   "author": "Adam Söderström",
   "license": "MIT",
