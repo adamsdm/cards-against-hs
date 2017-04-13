@@ -28,7 +28,8 @@ module.exports = {
         keep_fnames: true
       },
       compress: {
-        screw_ie8: true
+        screw_ie8: true, 
+        warnings: false
       },
       comments: false
     })
