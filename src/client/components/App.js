@@ -3,6 +3,7 @@ import BlackCard from './BlackCard'
 import WhiteCards from './WhiteCards'
 import JoinRoomForm from './JoinRoomForm'
 import Submissions from './Submissions'
+import Header from './Header'
 
 var _ = require('underscore');
 
@@ -130,22 +131,26 @@ class App extends Component {
             return <JoinRoomForm tryJoinRoom={this.tryJoinRoom.bind(this)}/>
         }
         return (
-            <div className="container">
-                <BlackCard bcText = {this.state.bcText} />
-                {!this.state.cardsSubmitted && this.state.whiteCards.length>0 &&
-                    <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect} submit={this.submitCards.bind(this)}/>
-                }
-                {this.state.cardsSubmitted && this.state.othersSubmitted.length == 0 &&
-                    <h3> Waiting for other players... </h3>
-                }
-                {this.state.othersSubmitted.length>0 && 
-                    <Submissions 
-                        voteOnSubmission={this.voteOnSubmission.bind(this)} 
-                        uname={this.state.username} 
-                        inround={this.state.inRound} 
-                        submissions={this.state.othersSubmitted}
-                    />
-                }
+            <div>
+                <Header username={this.state.username} roomcode={this.state.roomcode}/>
+                <div className="container">
+
+                    <BlackCard bcText = {this.state.bcText} />
+                    {!this.state.cardsSubmitted && this.state.whiteCards.length>0 &&
+                        <WhiteCards wcards = {this.state.whiteCards} maxSelected = {this.state.maxWcSelect} submit={this.submitCards.bind(this)}/>
+                    }
+                    {this.state.cardsSubmitted && this.state.othersSubmitted.length == 0 &&
+                        <h3> Waiting for other players... </h3>
+                    }
+                    {this.state.othersSubmitted.length>0 && 
+                        <Submissions 
+                            voteOnSubmission={this.voteOnSubmission.bind(this)} 
+                            uname={this.state.username} 
+                            inround={this.state.inRound} 
+                            submissions={this.state.othersSubmitted}
+                        />
+                    }
+                </div>
             </div>
         )
     }

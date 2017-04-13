@@ -21,6 +21,7 @@ class Submissions extends Component {
     render() {
         return (
             <div>
+                <h3> Time to vote! </h3>
                 {this.renderSubmissions()}
             </div>
         )

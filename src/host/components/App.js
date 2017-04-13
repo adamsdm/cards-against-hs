@@ -12,7 +12,7 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-          bcText: 'Cards against humanity',
+          bcText: 'Cards Against Homo Sapiens',
           inRoom: false,
           players: [],
           allHaveSubmitted: true,
