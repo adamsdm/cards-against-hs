@@ -4,7 +4,6 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var path = require('path');
 
-
 var _ = require('underscore');
 var cards = require('./cards/baseSet.json');
 
