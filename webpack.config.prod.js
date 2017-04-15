@@ -22,6 +22,8 @@ module.exports = {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      minimize: true,
       beautify: false,
       mangle: {
         screw_ie8: true,
