@@ -7,8 +7,23 @@
     "start:dev": "./node_modules/.bin/cross-env NODE_ENV=development node server.js",
     "start:prod": "./node_modules/.bin/cross-env NODE_ENV=production node server.js",
     "build:dev": "./node_modules/.bin/webpack --config webpack.config.dev.js --progress --profile --colors",
-    "build:prod": "./node_modules/.bin/webpack --config webpack.config.prod.js --progress --profile --colors"
+    "build:prod": "./node_modules/.bin/webpack --config webpack.config.prod.js --progress --profile --colors",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.prod.js --progress"
   },
+  "engines": {
+    "node": "6.10.1"
+  },
+  "repository":{
+    "type": "git",
+    "url": "https://gitlab.ida.liu.se/adaso578/cards-against"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "socket",
+    "react",
+    "cards against"
+  ],
   "author": "Adam Söderström",
   "license": "MIT",
   "devDependencies": {

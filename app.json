@@ -1,0 +1,6 @@
+{
+	"name": "Cards Against Homo Sapiens",
+	"description": "A implementation of cards against humanity",
+	"repository": "https://gitlab.ida.liu.se/adaso578/cards-against",
+	"keywords": [ "node", "express", "socket", "react", "cards against"]
+}
