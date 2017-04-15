@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 class PlayerList extends Component {
     decideImg(player){
         if(player.submittedCards.length > 0)
-            return "images/user-icon-submitted.png";
+            //return "images/user-icon-submitted.png";
+            return "images/user-icon.png"
         else if(!player.inRound){
             return "images/user-icon-waiting.png";
         }

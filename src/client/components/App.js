@@ -132,7 +132,7 @@ class App extends Component {
         }
         return (
             <div>
-                <Header username={this.state.username} roomcode={this.state.roomcode}/>
+                <Header text={"In room: "+ this.state.roomcode}/>
                 <div className="container">
 
                     <BlackCard bcText = {this.state.bcText} />

@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-
-const formStyle = {
-
-}
+import Header from './Header'
 
 class JoinRoomForm extends Component {
 
@@ -31,13 +28,16 @@ class JoinRoomForm extends Component {
 
     render() {
         return (
-            <div className="container">
-                <h3> Join room </h3>
-                <form onSubmit={this.handleSubmit} className="joinRoomForm">   
-                    <input type="text" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} placeholder="Username"/><br/>
-                    <input type="text" value={this.state.roomcode} onChange={this.handleChange.bind(this, 'roomcode')} placeholder="Roomcode"/><br/>
-                    <input type="submit" value="Submit" />
-                </form>
+            <div>
+                <Header text="Cards Against Homo Sapiens" color="black"/>
+                <div className="container">
+                    <h3> Join room </h3>
+                    <form onSubmit={this.handleSubmit} className="joinRoomForm">   
+                        <input type="text" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} placeholder="Username"/><br/>
+                        <input type="text" value={this.state.roomcode} onChange={this.handleChange.bind(this, 'roomcode')} placeholder="Roomcode"/><br/>
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
             </div>
         )
     }

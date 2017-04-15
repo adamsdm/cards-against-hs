@@ -35,6 +35,28 @@
             font-weight: bold;
         }
 
+        .info{
+            color: black;
+            margin: 20px;
+            border: 2px solid gray;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: white;
+        }
+        @media(min-width: 990px){
+            .info{
+                margin-top: 100px;
+                width: 200px;
+                height: 300px;
+                -webkit-transform: rotate(10deg);
+                -ms-transform: rotate(10deg);
+                transform: rotate(10deg);
+            }
+        }
+        .info #url{
+            color: gray;
+        }
+
     </style>
 </head>
 
@@ -46,11 +68,16 @@
 
 
     <div class="container">
-        <div class=title>
-            <h1> Cards <br/>
-                Against <br/>
-                Homo Sapiens
-            </h1>    
+        <div class="row">
+            <div class="col-md-9 title">
+                <h1> Cards <br/>
+                    Against <br/>
+                    Homo Sapiens
+                </h1>    
+            </div>
+            <div class="col-md-3 info">
+                <p>To join a game, go to <span id="url">URL</span> on a mobile device and enter a username and roomcode</p>
+            </div>
         </div>
         
         <div class="content">
@@ -61,6 +88,8 @@
     
     <script>
         var socket = io.connect(window.location.host);
+
+        document.getElementById('url').innerHTML = window.location;
 
         document.getElementById('create-game').onclick = function() {
             socket.emit('create-room');
