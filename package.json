@@ -13,7 +13,7 @@
   "engines": {
     "node": "6.10.1"
   },
-  "repository":{
+  "repository": {
     "type": "git",
     "url": "https://gitlab.ida.liu.se/adaso578/cards-against"
   },
@@ -33,12 +33,16 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-react-hmre": "^1.1.1",
     "cross-env": "^4.0.0",
+    "css-loader": "^0.28.0",
     "express": "^4.15.2",
     "express-error-handler": "^1.1.0",
     "immutability-helper": "^2.1.2",
+    "node-sass": "^4.5.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "sass-loader": "^6.0.3",
     "socket.io": "^1.7.3",
+    "style-loader": "^0.16.1",
     "underscore": "^1.8.3",
     "webpack": "^2.3.1",
     "webpack-dev-middleware": "^1.10.1",

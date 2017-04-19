@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false
+      debug: false,
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -45,6 +45,10 @@ module.exports = {
         query: {
           presets: ['react', 'es2015']
         }
+      },
+      {
+          test: /\.scss/,
+          loader: 'style-loader!css-loader!sass-loader',
       }
     ]
   }

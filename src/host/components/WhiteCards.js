@@ -18,7 +18,7 @@ class WhiteCards extends Component {
         return(
             <div className="flipper">
                 <div className="front">
-                    <h2 style={{margin:'10px', fontWeight: 'bold'}}>
+                    <h2 className="front-text">
                         Cards<br /> 
                         Against<br /> 
                         Humanity <br />
@@ -34,7 +34,7 @@ class WhiteCards extends Component {
     renderText(player){
         return player.submittedCards.map((text, i) => {
             return(
-                <div className="white-card-text" key={i} dangerouslySetInnerHTML={this.createMarkup(text+'<br/><br/>')}></div>
+                <div className="back-text" key={i} dangerouslySetInnerHTML={this.createMarkup(text+'<br/><br/>')}></div>
             )
         })
     }

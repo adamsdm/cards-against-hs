@@ -4,6 +4,11 @@ import BlackCard from './BlackCard'
 import WhiteCards from './WhiteCards'
 import PlayerList from './PlayerList'
 
+// scss
+require('../scss/comp.scss');
+require('../scss/flipper.scss');
+
+
 var _ = require('underscore');
 
 var socket = io.connect(window.location.host);
@@ -237,10 +242,10 @@ class App extends Component {
                 </div>
                 <PlayerList players={this.state.players} />
                 {this.state.allHaveSubmitted && this.state.allCardsFlipped && this.state.allVoted &&
-                    <button id="req-card" onClick={this.reqBlackCard.bind(this)}> Request new card </button>
+                    <button id="req-card" onClick={this.reqBlackCard.bind(this)}> <h3>Request new card</h3> </button>
                 }
                 {this.state.allHaveSubmitted && !this.state.allCardsFlipped &&
-                    <button id="flip-cards" onClick={this.flipCards.bind(this)}> Flip cards </button>
+                    <button id="flip-cards" onClick={this.flipCards.bind(this)}> <h3>Flip cards </h3></button>
                 }
             </div>
         )

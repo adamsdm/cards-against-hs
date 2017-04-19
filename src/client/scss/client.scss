@@ -1,0 +1,51 @@
+//colors
+$color_japanese_laurel_approx: green;
+$black:  black;
+$color_saffron_approx: #f7b733;
+$white: white;
+
+.whiteCardTable {
+	td {
+		border: 1px solid;
+		min-width: 30px;
+		padding: 10px;
+	}
+	tr {
+		cursor: pointer;
+	}
+}
+.selected {
+	background-color: $color_japanese_laurel_approx;
+}
+.joinRoomForm {
+	margin-top: 20px;
+	input {
+		width: 100%;
+	}
+}
+.submitted {
+	background-color: $color_japanese_laurel_approx;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 999em;
+}
+.submission {
+	border: 2px solid $black;
+	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 10px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+.head {
+	width: 100%;
+	background-color: $color_saffron_approx;
+	margin-top: -20px;
+	text-align: center;
+	height: 70px;
+	h4 {
+		line-height: 70px;
+		color: $white;
+	}
+}
