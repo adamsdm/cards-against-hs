@@ -9,6 +9,14 @@ $font_1: Helvetica;
 $font_2: Arial;
 $font_3: sans-serif;
 
+$bc-font-size: 42px;
+
+// Breakpoints
+$break-l: 1200px;   /* Large Devices, Big Desktops */
+$break-m: 992px;    /* Medium Devices, Desktops */
+$break-s: 768px;    /* Small Devices, Tablets */
+$break-xs: 480px;   /* Extra Small Devices, Phones */ 
+
 //@extend-elements
 //original selectors
 //#req-card, #flip-cards
@@ -62,6 +70,22 @@ body {
 .bcText {
 	text-align: center;
 	margin-top: 90px;
+	font-size: $bc-font-size;
+    @media only screen and (max-width : $break-l) {
+    	font-size: $bc-font-size*0.9;
+    }
+
+    @media only screen and (max-width : $break-m) {
+    	font-size: $bc-font-size*0.8;
+    }
+   
+    @media only screen and (max-width : $break-s) {
+    	font-size: $bc-font-size*0.7;
+    }
+
+    @media only screen and (max-width : $break-xs) {
+    	font-size: $bc-font-size*0.6;
+    } 
 }
 .table-container {
 	position: fixed;
@@ -91,7 +115,7 @@ body {
 .main-content {
 	position: absolute;
 	margin: auto;
-	top: 0;
+	top: 60px;
 	right: 0;
 	bottom: 0;
 	left: 0;
