@@ -225,7 +225,7 @@ class App extends Component {
 
     render() {
         if(!this.state.inRoom){
-            return <h1>Oops :( </h1>;
+            return <h1>Joining room {this.state.roomId}...</h1>;
         }
 
         return (
