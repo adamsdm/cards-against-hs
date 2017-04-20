@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+require('../scss/submission.scss');
 
 class Submissions extends Component {
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Wcard from './Wcard'
+require('../scss/whitecards.scss');
 var _ = require('underscore');
 
 class WhiteCards extends Component {

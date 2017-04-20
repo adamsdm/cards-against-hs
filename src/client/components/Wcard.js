@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+require('../scss/wcard.scss');
 
 class Wcard extends Component {
     constructor(props, context) {

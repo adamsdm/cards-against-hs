@@ -5,9 +5,6 @@ import JoinRoomForm from './JoinRoomForm'
 import Submissions from './Submissions'
 import Header from './Header'
 
-// scss
-require('../scss/client.scss');
-
 var _ = require('underscore');
 
 var socket = io.connect(window.location.host);

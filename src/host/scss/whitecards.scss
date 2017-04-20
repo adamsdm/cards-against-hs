@@ -86,6 +86,9 @@ $gray: gray;
     } 
 }
 
+.wc-container {
+    width: 100%;
+}
 
 .flip-container {
     //Instead of the line below you could use @include perspective($p)

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+require('../scss/blackcard.scss');
 
 class BlackCard extends Component {
     createMarkup(text) {

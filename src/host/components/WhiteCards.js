@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+require('../scss/whitecards.scss');
 
 class WhiteCards extends Component {
     createMarkup(text) {

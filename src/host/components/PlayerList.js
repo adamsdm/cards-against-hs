@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+require('../scss/playerlist.scss');
 
 class PlayerList extends Component {
     decideImg(player){

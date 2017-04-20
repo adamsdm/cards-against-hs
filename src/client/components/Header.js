@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+require('../scss/head.scss');
 
 const colors = [
 			"#FFDC00",
