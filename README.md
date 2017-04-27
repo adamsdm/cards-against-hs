@@ -1,6 +1,9 @@
 # Cards Against Homo Sapiens
 ## Made in TDDD27 - Advanced Webbprograming
 
+![alt text](https://gitlab.ida.liu.se/adaso578/cards-against/raw/81ecc011a3f6b10906ee9d397a0ca8f0083d7ecc/Banner.png)
+
+
 ### About
 This is an implementation of the popular party game "Cards against humanity".
 
