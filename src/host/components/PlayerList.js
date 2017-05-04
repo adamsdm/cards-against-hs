@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
+require('../scss/playerlist.scss');
+
 class PlayerList extends Component {
     decideImg(player){
         if(player.submittedCards.length > 0)

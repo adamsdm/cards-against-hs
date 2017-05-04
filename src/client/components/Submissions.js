@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
+require('../scss/submission.scss');
+
 class Submissions extends Component {
 
     handleSelect(user){

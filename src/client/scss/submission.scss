@@ -1,0 +1,12 @@
+@import 'common.scss';
+
+.submission {
+    border: 2px solid $black;
+    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 5px;
+}

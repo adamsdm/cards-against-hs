@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
+require('../scss/blackcard.scss');
+
 class BlackCard extends Component {
     createMarkup(text) {
         return {__html: text};

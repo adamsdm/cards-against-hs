@@ -5,8 +5,7 @@ import WhiteCards from './WhiteCards'
 import PlayerList from './PlayerList'
 
 // scss
-require('../scss/comp.scss');
-require('../scss/flipper.scss');
+require('../scss/app.scss');
 
 
 var _ = require('underscore');

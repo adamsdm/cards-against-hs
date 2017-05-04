@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import Header from './Header'
+
+require('../scss/joinroomform.scss');
 
 class JoinRoomForm extends Component {
 

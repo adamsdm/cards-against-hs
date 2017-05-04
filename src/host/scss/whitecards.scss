@@ -36,7 +36,7 @@ $gray: gray;
 }
 
 %extend_dims {
-    $width: 200px;
+    $width: 180px;
     $front-text-size: 30px;
     $back-text-size: 18px;
 
@@ -86,6 +86,9 @@ $gray: gray;
     } 
 }
 
+.wc-container {
+    width: 100%;
+}
 
 .flip-container {
     //Instead of the line below you could use @include perspective($p)

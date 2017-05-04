@@ -77,10 +77,6 @@ app.get('/host.html', function (req, res) {
 io.on('connection', function(socket){
   console.log("A user connected");
 
-
-
-
-
   socket.on('create-room', function(){
 
     var roomId = createRandString();
@@ -214,6 +210,8 @@ io.on('connection', function(socket){
   })
 
   socket.on('disconnect', function(){
+
+    console.log('User '+socket.username+' disconnected');
 
     if(socket.username=="HOST"){
       io.sockets.in(socket.room).emit('host-left-room');

@@ -1,0 +1,22 @@
+@import 'common.scss';
+
+.bcText {
+    text-align: center;
+    margin-top: 90px;
+    font-size: $bc-font-size;
+    @media only screen and (max-width : $break-l) {
+        font-size: $bc-font-size*0.9;
+    }
+
+    @media only screen and (max-width : $break-m) {
+        font-size: $bc-font-size*0.8;
+    }
+   
+    @media only screen and (max-width : $break-s) {
+        font-size: $bc-font-size*0.7;
+    }
+
+    @media only screen and (max-width : $break-xs) {
+        font-size: $bc-font-size*0.6;
+    } 
+}

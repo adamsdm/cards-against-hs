@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
+require('../scss/whitecards.scss');
+
 class WhiteCards extends Component {
     createMarkup(text) {
         return {__html: text};

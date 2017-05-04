@@ -1,0 +1,15 @@
+@import 'common.scss';
+
+.table-container {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+}
+
+#playerList {
+    margin: 0 auto;
+    text-align: center;
+    td {
+        padding: 10px;
+    }
+}

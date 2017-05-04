@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
+require('../scss/head.scss');
+
 const colors = [
 			"#1abc9c",
 			"#3498db",
