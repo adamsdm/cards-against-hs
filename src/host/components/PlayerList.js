@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 class PlayerList extends Component {
     decideImg(player){
@@ -39,6 +40,10 @@ class PlayerList extends Component {
         </div>
         )
     }
+}
+
+PlayerList.propTypes = {
+    players: PropTypes.array
 }
 
 export default PlayerList

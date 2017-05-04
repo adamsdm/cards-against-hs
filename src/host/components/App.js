@@ -212,7 +212,7 @@ class App extends Component {
     flipCards(){
         if(this.state.allCardsFlipped){
             alert("All cards flipped");
-         return;
+            return;
         }
 
         var cards = document.getElementsByClassName("not-flipped");

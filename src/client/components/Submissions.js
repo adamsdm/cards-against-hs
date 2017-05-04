@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 class Submissions extends Component {
 
@@ -26,6 +27,12 @@ class Submissions extends Component {
             </div>
         )
     }
+}
+
+Submissions.propTypes = {
+    uname: PropTypes.string,
+    inround: PropTypes.bool,
+    submissions: PropTypes.array
 }
 
 export default Submissions

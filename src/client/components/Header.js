@@ -1,32 +1,29 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types';
 
 const colors = [
-			"#FFDC00",
-			"#001f3f",
-			"#0074D9",
-			"#7FDBFF",
-			"#39CCCC",
-			"#3D9970",
-			"#2ECC40",
-			"#FF4136",
-			"#FF851B"
+			"#1abc9c",
+			"#3498db",
+			"#8e44ad",
+			"#c0392b",
+			"#9b59b6",
+			"#2c3e50",
+			"#95a5a6",
+			"#f39c12",
 		];
 
 var headStyle = {};
 
 class Header extends Component {
 
-	componentWillMount(){
+    render() {
+		// Generate a random color from 'colors'
 		let color = this.props.color || colors[Math.round(Math.random()*(colors.length-1))];
-
+		
 		headStyle = {
 			backgroundColor: color
 		}
 
-	}
-
-    render() {
         return (
         <div className="head" style={headStyle}>
             {this.props.text &&
@@ -35,6 +32,11 @@ class Header extends Component {
         </div>
         )
     }
+}
+
+Header.propTypes = {
+    text: PropTypes.string,
+    color: PropTypes.string
 }
 
 export default Header

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 class BlackCard extends Component {
     createMarkup(text) {
@@ -12,6 +13,10 @@ class BlackCard extends Component {
         </div>
         )
     }
+}
+
+BlackCard.propTypes = {
+    bcText: PropTypes.string
 }
 
 export default BlackCard

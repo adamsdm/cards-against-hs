@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 class Wcard extends Component {
     constructor(props, context) {
@@ -49,6 +50,13 @@ class Wcard extends Component {
             </tr>
         )
     }
+}
+
+Wcard.propTypes = {
+    key: PropTypes.number,
+    text: PropTypes.string,
+    noSelected: PropTypes.number,
+    maxSelected: PropTypes.number
 }
 
 export default Wcard

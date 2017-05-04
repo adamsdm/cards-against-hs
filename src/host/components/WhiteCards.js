@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 class WhiteCards extends Component {
     createMarkup(text) {
@@ -21,7 +22,8 @@ class WhiteCards extends Component {
                     <h2 className="front-text">
                         Cards<br /> 
                         Against<br /> 
-                        Humanity <br />
+                        Homo <br />
+                        Sapiens <br />
                     </h2>
                 </div>
                 <div className="back">
@@ -67,6 +69,10 @@ class WhiteCards extends Component {
         </div>
         )
     }
+}
+
+WhiteCards.propTypes = {
+    players: PropTypes.array
 }
 
 export default WhiteCards

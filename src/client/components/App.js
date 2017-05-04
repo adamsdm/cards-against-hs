@@ -131,7 +131,13 @@ class App extends Component {
 
     render() {
         if(!this.state.inRoom){
-            return <JoinRoomForm tryJoinRoom={this.tryJoinRoom.bind(this)}/>
+
+            return(
+                <div>
+                    <Header text="Cards Against Homo Sapiens" color="black"/>
+                    <JoinRoomForm tryJoinRoom={this.tryJoinRoom.bind(this)}/>
+                </div>
+            )
         }
         return (
             <div>

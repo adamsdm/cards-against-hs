@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Header from './Header'
 
 class JoinRoomForm extends Component {
 
@@ -29,7 +28,6 @@ class JoinRoomForm extends Component {
     render() {
         return (
             <div>
-                <Header text="Cards Against Homo Sapiens" color="black"/>
                 <div className="container">
                     <h3> Join room </h3>
                     <form onSubmit={this.handleSubmit} className="joinRoomForm">   
@@ -43,5 +41,7 @@ class JoinRoomForm extends Component {
     }
 
 }
+
+
 
 export default JoinRoomForm
